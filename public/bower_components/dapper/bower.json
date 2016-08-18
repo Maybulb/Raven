@@ -1,0 +1,28 @@
+{
+  "name": "dapper",
+  "version": "1.0.0",
+  "homepage": "https://github.com/probablyjosh/dapper",
+  "authors": [
+    "Josh Trommel <joshtrommel@gmail.com>"
+  ],
+  "description": "Simply Sexy Styling.",
+  "main": "css/style.css",
+  "keywords": [
+    "sass",
+    "css",
+    "dapper",
+    "framework",
+    "clean",
+    "simple",
+    "sexy",
+    "styling"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

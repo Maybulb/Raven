@@ -1,0 +1,33 @@
+{
+  "name": "raven",
+  "version": "1.0.0",
+  "description": "Only this and nothing more.",
+  "main": "index.js",
+  "dependencies": {
+    "bcrypt": "^0.8.7",
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "express-handlebars": "^3.0.0",
+    "mongoose": "^4.5.9"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ravenpoetry/raven.git"
+  },
+  "keywords": [
+    "raven",
+    "poetry",
+    "poems",
+    "network"
+  ],
+  "author": "Josh Trommel",
+  "license": "MPL-2.0",
+  "bugs": {
+    "url": "https://github.com/ravenpoetry/raven/issues"
+  },
+  "homepage": "https://github.com/ravenpoetry/raven#readme"
+}
