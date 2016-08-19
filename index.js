@@ -2,18 +2,37 @@ var express = require('express');
 var exphbs = require('express-handlebars');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
+var validator = require('express-validator');
+var session = require('express-session');
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+var morgan = require('morgan');
 
 var User = require('./models/user');
 
 var app = express();
 var port = process.env.PORT || 8080;
 
+// sessions
+app.use(session({
+	secret: 'sljdfhalsdkfj',
+	saveUninitialized: true,
+	resave: true
+}))
+
 // app config
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 app.use(express.static('public'));
 app.use(bodyParser.json());
+app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
+
+// validation
+// worry about this later
 
 // server connection
 mongoose.Promise = global.Promise;
@@ -45,7 +64,7 @@ app.post('/register', function(req, res) {
 })
 
 app.get('/login', function (req, res) {
-	res.send('signup in progress');
+	res.send('login in progress');
 })
 
 app.get('/users', function(req, res) {
