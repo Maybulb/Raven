@@ -10,7 +10,7 @@ module.exports = function(app, passport) {
 	});
 
 	app.get('/register', function(req, res) {
-		res.send('register in progress');
+		res.render('register');
 	});
 
 	app.post('/register', function(req, res) {
@@ -27,7 +27,7 @@ module.exports = function(app, passport) {
 	});
 
 	app.get('/login', function (req, res) {
-		res.send('login in progress');
+		res.render('login');
 	});
 
 	app.get('/users', function(req, res) {
