@@ -1,3 +1,5 @@
+var User = require('./models/user');
+
 module.exports = function(app, passport) {
 
 	app.get('/', function(req, res) {
@@ -13,22 +15,25 @@ module.exports = function(app, passport) {
 		res.render('register');
 	});
 
-	app.post('/register', function(req, res) {
-		var user = new User({
-			username: req.body.username,
-			password: req.body.password
-		});
+	app.post('/register', passport.authenticate('local-signup', {
+		successRedirect: '/profile',
+		failureRedirect: '/register',
+		failureFlash: true
+	}));
 
-		user.save(function(err) {
-			if (err) throw err;
-
-			res.send(user.username + ' saved successfully');
-		});
+	app.get('/profile', loggedIn, function(req, res) {
+		res.render('profile', {user: req.user});
 	});
 
 	app.get('/login', function (req, res) {
 		res.render('login');
 	});
+
+	app.post('/login', passport.authenticate('local-login', {
+		successRedirect: '/profile',
+		failureRedirect: '/login',
+		failureFlash: true
+	}));
 
 	app.get('/users', function(req, res) {
 		User.find({}, function(err, users) {
@@ -50,7 +55,7 @@ module.exports = function(app, passport) {
 
 
 	function loggedIn(req, res, next) {
-		if (req.isAuthenticated) return next();
+		if (req.isAuthenticated()) return next();
 
 		res.redirect('/'); // else redirect home
 	}

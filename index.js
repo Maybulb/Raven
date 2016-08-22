@@ -4,7 +4,6 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
 var morgan = require('morgan');
 var flash = require('connect-flash');
 var cookieParser = require('cookie-parser');
@@ -39,6 +38,9 @@ app.use(flash());
 // connect to db
 mongoose.Promise = global.Promise;
 mongoose.connect(configDB.url);
+
+// passport config baby!!
+require('./config/passport')(passport);
 
 // load those routes baby
 require('./app/routes.js')(app, passport);
