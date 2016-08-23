@@ -6,27 +6,27 @@ module.exports = function(app, passport) {
 		res.render('index');
 	});
 
+	app.get('/profile', loggedIn, function(req, res) {
+		res.render('profile', {user: req.user});
+	});
+
 	app.get('/logout', function(req, res) {
 		req.logout();
 		res.redirect('/');
 	});
 
 	app.get('/register', function(req, res) {
-		res.render('register');
+		res.render('register', { message: req.flash('registerMessage') });
 	});
 
-	app.post('/register', passport.authenticate('local-signup', {
+	app.post('/register', passport.authenticate('local-register', {
 		successRedirect: '/profile',
 		failureRedirect: '/register',
 		failureFlash: true
 	}));
 
-	app.get('/profile', loggedIn, function(req, res) {
-		res.render('profile', {user: req.user});
-	});
-
 	app.get('/login', function (req, res) {
-		res.render('login');
+		res.render('login', { message: req.flash('loginMessage') });
 	});
 
 	app.post('/login', passport.authenticate('local-login', {

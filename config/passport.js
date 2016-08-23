@@ -21,26 +21,20 @@ module.exports = function(passport) {
 		passReqToCallback: true
 	}, function(req, username, password, done) {
 		User.findOne({'username': username}, function(err, user) {
+			if (err) return done('oops'); // aaaaaaaa
 
-			console.log(username);
-			console.log(password);
-
-			if (err) return done('oops');
-
-			if (!user) {
-				console.log('no user found');
-				return done(null, false, req.flash('error', 'No user found.'));
-			}
+			if (!user)
+				return done(null, false, req.flash('loginMessage', 'User not found.');
 
 			if (!user.compare(password))
-				return done(null, false, req.flash('error', 'Incorrect password.'));
+				return done(null, false, req.flash('loginMessage', 'Incorrect Password.'));
 
 			// ok everything is gucci B)
 			return done(null, user);
 		});
 	}));
 
-	passport.use('local-signup', new LocalStrategy({
+	passport.use('local-register', new LocalStrategy({
 		usernameField: 'username',
 		passwordField: 'password',
 		passReqToCallback: true
@@ -50,7 +44,8 @@ module.exports = function(passport) {
 				if (err) return done(err);
 
 				if (user) {
-					return done(null, false, req.flash('error', 'That username is already taken.'));
+					console.log('user already exists');
+					return done(null, false, req.flash('registerMessage', 'User already exists.'));
 				} else {
 					var user = new User();
 
