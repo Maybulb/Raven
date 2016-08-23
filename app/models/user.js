@@ -35,7 +35,7 @@ userSchema.post('save', function(user) {
 })
 
 userSchema.methods.compare = function(pw) {
-	bcrypt.compareSync(password, this.passsword);
+	return bcrypt.compareSync(pw, this.password);
 }
 
 module.exports = mongoose.model('User', userSchema);

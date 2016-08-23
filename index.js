@@ -21,7 +21,7 @@ app.use(session({
 	secret: 'sljdfhalsdkfj',
 	saveUninitialized: true,
 	resave: true
-}))
+}));
 
 // app config
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
@@ -34,6 +34,12 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(cookieParser());
 app.use(flash());
+
+// flashes
+app.use(function(req, res, next) {
+	res.locals.messages = req.flash();
+	next();
+});
 
 // connect to db
 mongoose.Promise = global.Promise;

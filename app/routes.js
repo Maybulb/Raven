@@ -35,6 +35,7 @@ module.exports = function(app, passport) {
 		failureFlash: true
 	}));
 
+	// testing, remove in production
 	app.get('/users', function(req, res) {
 		User.find({}, function(err, users) {
 			if (err) throw err;
