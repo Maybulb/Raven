@@ -7,7 +7,7 @@ module.exports = function(app, passport) {
 
 	app.get('/', function(req, res) {
 		if (req.isAuthenticated()) {
-			res.render('home', {user: req.user});
+			res.render('home', {user: req.user, title: 'Post'});
 		} else {
 			res.render('index');
 		}
@@ -29,7 +29,7 @@ module.exports = function(app, passport) {
 	});
 
 	app.get('/settings', loggedIn, function(req, res) {
-		res.render('settings', {user: req.user});
+		res.render('settings', {user: req.user, title: req.user.username});
 	});
 
 	app.get('/logout', function(req, res) {
@@ -38,7 +38,10 @@ module.exports = function(app, passport) {
 	});
 
 	app.get('/register', function(req, res) {
-		res.render('register', { message: req.flash('registerMessage') });
+		res.render('register', {
+			title: 'Register',
+			message: req.flash('registerMessage')
+		});
 	});
 
 	app.post('/register', passport.authenticate('local-register', {
@@ -48,7 +51,10 @@ module.exports = function(app, passport) {
 	}));
 
 	app.get('/login', function (req, res) {
-		res.render('login', { message: req.flash('loginMessage') });
+		res.render('login', {
+			title: 'Login',
+			message: req.flash('loginMessage')
+		});
 	});
 
 	app.post('/login', passport.authenticate('local-login', {
@@ -59,15 +65,21 @@ module.exports = function(app, passport) {
 
 	app.get('/poem/:id', function(req, res) {
 		var id = req.params.id;
+
 		Poem.findOne({_id: id}, function(err, poem) {
 			if (err) res.send(err);
 
 			User.findOne({_id: poem.author}, function(err, author) {
 				if (err) res.send(err);
 
-				res.render('poem', {poem: poem, author: author});
+				res.render('poem', {
+					poem: poem,
+					author: author,
+					title: poem.title
+				});
 			});
 		});
+
 	});
 
 	// testing, remove in production
