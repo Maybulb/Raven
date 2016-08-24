@@ -66,10 +66,15 @@ module.exports = function(app, passport) {
 		Poem.findOne({_id: id}, function(err, poem) {
 			if (err) res.send(err);
 
-			res.send(poem);
-		})
+			User.findOne({_id: poem.author}, function(err, author) {
+				if (err) res.send(err);
+
+				res.render('poem', {poem: poem, author: author});
+			});
+		});
 	});
 
+	// testing, remove in production
 	app.get('/poems', function(req, res) {
 		Poem.find({}, function(err, poems) {
 			if (err) throw err;

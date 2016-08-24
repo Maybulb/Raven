@@ -3,6 +3,7 @@ html { margin: 30px; }
 body { padding: 30px; }
 a { color: inherit; }
 header { font-size: 30px; margin-bottom: 20px; }
+p { white-space: pre-wrap; }
 input[type=text], input[type=password] {
 	margin: 5px;
 	font-size: 20px;
