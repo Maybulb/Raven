@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 var ObjectId = Schema.ObjectId;
 
 var poemSchema = new Schema({
-	title: { type: String, required: true },
+	title: { type: String, required: true, unique: true },
 	content: { type: String, required: true },
 	author: { type: ObjectId, required: true },
 	created_at: Date
@@ -13,6 +13,8 @@ var poemSchema = new Schema({
 poemSchema.pre('save', function(next) {
 	// new poem gets current created at day
 	if (!this.created_at) this.created_at = new Date();
+
+	next();
 })
 
 module.exports = mongoose.model('Poem', poemSchema);

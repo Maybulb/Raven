@@ -1,9 +1,16 @@
+var mongoose = require('mongoose');
+
 var User = require('./models/user');
+var Poem = require('./models/poem');
 
 module.exports = function(app, passport) {
 
 	app.get('/', function(req, res) {
-		res.render('index');
+		if (req.isAuthenticated()) {
+			res.render('home', {user: req.user});
+		} else {
+			res.render('index');
+		}
 	});
 
 	app.get('/profile', loggedIn, function(req, res) {
@@ -20,7 +27,7 @@ module.exports = function(app, passport) {
 	});
 
 	app.post('/register', passport.authenticate('local-register', {
-		successRedirect: '/profile',
+		successRedirect: '/',
 		failureRedirect: '/register',
 		failureFlash: true
 	}));
@@ -30,10 +37,46 @@ module.exports = function(app, passport) {
 	});
 
 	app.post('/login', passport.authenticate('local-login', {
-		successRedirect: '/profile',
+		successRedirect: '/',
 		failureRedirect: '/login',
 		failureFlash: true
 	}));
+
+	app.post('/', loggedIn, function(req, res) {
+		// post a poem
+		var poem = new Poem({
+			title: req.body.title,
+			content: req.body.poem,
+			author: req.user._id
+		});
+
+		poem.save(function(err, poem) {
+			if (err) throw err;
+
+			console.log(poem._id);
+
+			res.redirect('/poem/' + poem._id)
+		});
+
+
+	});
+
+	app.get('/poem/:id', function(req, res) {
+		var id = req.params.id;
+		Poem.findOne({_id: id}, function(err, poem) {
+			if (err) res.send(err);
+
+			res.send(poem);
+		})
+	});
+
+	app.get('/poems', function(req, res) {
+		Poem.find({}, function(err, poems) {
+			if (err) throw err;
+
+			res.send(poems);
+		})
+	})
 
 	// testing, remove in production
 	app.get('/users', function(req, res) {
@@ -54,11 +97,14 @@ module.exports = function(app, passport) {
 		});
 	});
 
+	app.get('*', function(req, res) {
+		res.render('404');
+	})
 
 	function loggedIn(req, res, next) {
 		if (req.isAuthenticated()) return next();
 
-		res.redirect('/'); // else redirect home
+		res.redirect('/login'); // else redirect to login
 	}
 
 }

@@ -26,13 +26,9 @@ userSchema.pre('save', function(next) {
 		bcrypt.hash(user.password, salt, function(err, hash) {
 			user.password = hash;
 			next();
-		})
-	})
-})
-
-userSchema.post('save', function(user) {
-	console.log('saved ', user);
-})
+		});
+	});
+});
 
 userSchema.methods.compare = function(pw) {
 	return bcrypt.compareSync(pw, this.password);

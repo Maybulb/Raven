@@ -47,10 +47,10 @@ module.exports = function(passport) {
 					console.log('user already exists');
 					return done(null, false, req.flash('registerMessage', 'User already exists.'));
 				} else {
-					var user = new User();
-
-					user.username = username;
-					user.password = password;
+					var user = new User({
+						username: username,
+						password: password
+					});
 
 					user.save(function(err) {
 						if (err) throw err;
