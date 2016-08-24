@@ -8,9 +8,6 @@ var morgan = require('morgan');
 var flash = require('connect-flash');
 var cookieParser = require('cookie-parser');
 
-var User = require('./app/models/user');
-var Poem = require('./app/models/poem');
-
 var configDB = require('./config/database');
 
 var app = express();
