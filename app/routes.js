@@ -13,8 +13,23 @@ module.exports = function(app, passport) {
 		}
 	});
 
-	app.get('/profile', loggedIn, function(req, res) {
-		res.render('profile', {user: req.user});
+	app.post('/', loggedIn, function(req, res) {
+		// post a poem
+		var poem = new Poem({
+			title: req.body.title,
+			content: req.body.poem,
+			author: req.user._id
+		});
+
+		poem.save(function(err, poem) {
+			if (err) res.send(err);
+
+			res.redirect('/poem/' + poem._id)
+		});
+	});
+
+	app.get('/settings', loggedIn, function(req, res) {
+		res.render('settings', {user: req.user});
 	});
 
 	app.get('/logout', function(req, res) {
@@ -41,25 +56,6 @@ module.exports = function(app, passport) {
 		failureRedirect: '/login',
 		failureFlash: true
 	}));
-
-	app.post('/', loggedIn, function(req, res) {
-		// post a poem
-		var poem = new Poem({
-			title: req.body.title,
-			content: req.body.poem,
-			author: req.user._id
-		});
-
-		poem.save(function(err, poem) {
-			if (err) throw err;
-
-			console.log(poem._id);
-
-			res.redirect('/poem/' + poem._id)
-		});
-
-
-	});
 
 	app.get('/poem/:id', function(req, res) {
 		var id = req.params.id;
@@ -97,10 +93,19 @@ module.exports = function(app, passport) {
 
 		User.findOne({username: username}, function(err, user) {
 			if (err) throw err;
-
-			res.send(user);
+			if (!user) {
+				res.render('404')
+			} else {
+				Poem.find({author: user._id}, function(err, poems) {
+					res.render('profile', {user: user, poems: poems});
+				})
+			}
 		});
 	});
+
+	app.get('/me', loggedIn, function(req, res) {
+		res.redirect('/user/' + req.user.username);
+	})
 
 	app.get('*', function(req, res) {
 		res.render('404');

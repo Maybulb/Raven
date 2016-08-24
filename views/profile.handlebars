@@ -1,3 +1,7 @@
-<h2>logged in as &ldquo;{{user.username}}&rdquo;</h2>
+<h2>{{user.username}}</h2>
 
-<a href="/logout">logout</a>
+<ul>
+	{{#each poems}}
+		<li><a href="/poem/{{this._id}}">{{this.title}}</a></li>
+	{{/each}}
+</ul>
