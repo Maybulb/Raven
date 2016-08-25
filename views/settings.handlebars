@@ -1,4 +1,10 @@
-<h2>logged in as &ldquo;{{user.username}}&rdquo;</h2>
-<h3>created account {{user.created_at}}</h3>
+
+<form action="/settings" method="post">
+	<p>logged in as <input type="text" value="{{user.username}}" name="username"></p>
+
+	<input type="submit" value="Save">
+</form>
+
+<p>created account {{user.created_at}}</p>
 
 <a href="/logout">logout</a>

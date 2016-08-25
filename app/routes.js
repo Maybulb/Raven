@@ -32,6 +32,18 @@ module.exports = function(app, passport) {
 		res.render('settings', {user: req.user, title: req.user.username});
 	});
 
+	app.post('/settings', loggedIn, function(req, res) {
+		User.findOne({username: req.user.username}, function(err, user) {
+			user.username = req.body.username;
+
+			user.save(function(err) {
+				if (err) throw err;
+			});
+
+			res.redirect(req.get('referer'));
+		});
+	});
+
 	app.get('/logout', function(req, res) {
 		req.logout();
 		res.redirect('/');
