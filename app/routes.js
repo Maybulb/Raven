@@ -44,6 +44,19 @@ module.exports = function(app, passport) {
 		});
 	});
 
+	app.get('/delete', loggedIn, function(req, res) {
+		res.render('delete', {user: req.user});
+	});
+
+	app.post('/delete', loggedIn, function(req, res) {
+		// change this to app.delete soon
+		User.remove({_id: req.user._id}, function(err) {
+			if (err) throw err;
+
+			res.redirect('/');
+		})
+	});
+
 	app.get('/logout', function(req, res) {
 		req.logout();
 		res.redirect('/');
