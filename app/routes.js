@@ -53,6 +53,8 @@ module.exports = function(app, passport) {
 		User.remove({_id: req.user._id}, function(err) {
 			if (err) throw err;
 
+			Poem.find({author: req.user._id}).remove().exec();
+
 			res.redirect('/');
 		})
 	});
