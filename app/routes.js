@@ -59,6 +59,34 @@ module.exports = function(app, passport) {
 		})
 	});
 
+	app.get('/edit/:id', function(req, res) {
+		Poem.findOne({_id: req.params.id}, function(err, poem) {
+			if (req.user == null || poem.id == null) res.redirect('/login');
+			if (err) throw err;
+
+			if (String(poem.author) === String(req.user._id)) {
+				res.render('edit', {poem: poem})
+			} else {
+				res.redirect('/login');
+			}
+		});
+	});
+
+	app.post('/edit/:id', function(req, res) {
+		Poem.findOne({_id: req.params.id}, function(err, poem) {
+			if (err) throw err;
+
+			poem.title = req.body.title;
+			poem.content = req.body.content;
+
+			poem.save(function(err) {
+				if (err) throw err;
+
+				res.redirect('/poem/' + poem._id);
+			});
+		});
+	});
+
 	app.get('/logout', function(req, res) {
 		req.logout();
 		res.redirect('/');
