@@ -1,11 +1,12 @@
-<h2>Login</h2>
+<div class="row block">
+	<div class="twelve columns">
+		<h2>Login</h2>
+		<form action="/login" method="post">
+			<input autofocus type="text" name="username" placeholder="username">
+			<input type="password" name="password" placeholder="*****">
 
-<form action="/login" method="post">
-	<input autofocus type="text" name="username" placeholder="username">
-	<input type="password" name="password" placeholder="*****">
-
-	<button type="submit">Login</button>
-</form>
-
-<p>or <a href="/register">register</a>.</p>
-<p>or <a href="/">go home</a>.</p>
+			<button type="submit">Login</button>
+		</form>
+		<p>or <a href="/register">register</a></p>
+	</div>
+</div>

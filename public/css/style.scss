@@ -1,0 +1,61 @@
+$black: #111111;
+$white: #fff;
+
+body {
+	padding: 50px;
+	color: $black;
+	font-family: "Lora", sans-serif;
+}
+
+header {
+	font-size: 3.4em;
+	text-decoration: none;
+	font-family: "Playfair Display", sans-serif;
+	margin-bottom: 30px;
+}
+
+h2 {
+	font-family: "Playfair Display", sans-serif;
+	font-size: 2em;
+}
+
+.block {
+	padding: 15px;
+	border-radius: 5px;
+	&.inverse {
+		color: invert($black);
+		background: invert($white);
+	}
+}
+
+p { white-space: pre-wrap; }
+
+a {
+	color: #111111;
+	text-decoration: none;
+	&:hover {
+		color: inherit;
+		border-bottom: 2px solid $black;
+	}
+}
+
+input[type=text]#name {
+	font-size: 3em;
+	border: 0;
+	height: 110%;
+}
+
+textarea#poem {
+	font-size: 1.5em;
+	height: 150%;
+}
+
+input[type=submit] {
+	font-family: "Playfair Display", sans-serif !important;
+}
+
+input, textarea {
+	&:focus {
+		border-color: $black !important;
+	}
+}

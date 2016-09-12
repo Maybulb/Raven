@@ -1,19 +1,46 @@
-html { margin: 30px; }
-body { padding: 30px; }
-a { color: inherit; }
-header { font-size: 30px; margin-bottom: 20px; }
-p { white-space: pre-wrap; }
-input[type=text], input[type=password] {
-	margin: 5px;
-	font-size: 20px;
-	outline: none;
-}
-textarea {
-	border-radius: 5px;
-	width: 100%; max-width: 100%;
-	height: 30vh;
-	outline: none;
-	padding: 5px;
-	font-size: 20px;
-	font-family: inherit;
-}
+body {
+  padding: 50px;
+  color: #111111;
+  font-family: "Lora", sans-serif; }
+
+header {
+  font-size: 3.4em;
+  text-decoration: none;
+  font-family: "Playfair Display", sans-serif;
+  margin-bottom: 30px; }
+
+h2 {
+  font-family: "Playfair Display", sans-serif;
+  font-size: 2em; }
+
+.block {
+  padding: 15px;
+  border-radius: 5px; }
+  .block.inverse {
+    color: #eeeeee;
+    background: black; }
+
+p {
+  white-space: pre-wrap; }
+
+a {
+  color: #111111;
+  text-decoration: none; }
+  a:hover {
+    color: inherit;
+    border-bottom: 2px solid #111111; }
+
+input[type=text]#name {
+  font-size: 3em;
+  border: 0;
+  height: 110%; }
+
+textarea#poem {
+  font-size: 1.5em;
+  height: 150%; }
+
+input[type=submit] {
+  font-family: "Playfair Display", sans-serif !important; }
+
+input:focus, textarea:focus {
+  border-color: #111111 !important; }

@@ -1,6 +1,10 @@
-<form action="/edit/{{poem._id}}" method="post">
-	<input name="title" type="text" value="{{poem.title}}">
-	<textarea name="content">{{poem.content}}</textarea>
+<div class="row">
+	<div class="twelve columns">
+		<form action="/edit/{{poem._id}}" method="post">
+			<input name="title" type="text" value="{{poem.title}}" id="name" class="u-full-width" autofocus>
+			<textarea name="content" class="u-full-width" id="poem">{{poem.content}}</textarea>
 
-	<input type="submit" value="Save">
-</form>
+			<input type="submit" value="Save">
+		</form>
+	</div>
+</div>

@@ -20,7 +20,11 @@
     "passport-local": "^1.0.0",
     "passport-twitter": "^1.0.4"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-sass": "^2.3.2",
+    "nodemon": "^1.10.2"
+  },
   "scripts": {
     "test": "node index.js"
   },

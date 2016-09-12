@@ -44,12 +44,27 @@ module.exports = function(app, passport) {
 		});
 	});
 
-	app.get('/delete', loggedIn, function(req, res) {
-		res.render('delete', {user: req.user});
+	app.get('/delete/:id', function(req, res) {
+		Poem.findOne({_id: req.params.id}, function(err, poem) {
+			if (err) throw err;
+			
+			res.render('delete', {poem: poem});
+		});
 	});
 
-	app.post('/delete', loggedIn, function(req, res) {
-		// change this to app.delete soon
+	app.post('/delete/:id', function(req, res) {
+		Poem.remove({_id: req.params.id}, function(err) {
+			if (err) throw err;
+
+			res.redirect('/me');
+		});
+	});
+
+	app.get('/deactivate', loggedIn, function(req, res) {
+		res.render('deactivate', {user: req.user});
+	});
+
+	app.post('/deactivate', loggedIn, function(req, res) {
 		User.remove({_id: req.user._id}, function(err) {
 			if (err) throw err;
 
@@ -74,12 +89,12 @@ module.exports = function(app, passport) {
 
 	app.post('/edit/:id', function(req, res) {
 		Poem.findOne({_id: req.params.id}, function(err, poem) {
-			if (err) throw err;
+			if (err) return console.log(err);
 
 			poem.title = req.body.title;
 			poem.content = req.body.content;
 
-			poem.save(function(err) {
+			poem.save(function(err, poem) {
 				if (err) throw err;
 
 				res.redirect('/poem/' + poem._id);

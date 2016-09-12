@@ -1,0 +1,7 @@
+<h2>Are you sure you want to delete <u>{{poem.title}}</u>?
+
+<form action="/delete/{{poem._id}}" method="post">
+	<input type="submit" value="Yes">
+</form>
+
+<a href="/poem/{{poem._id}}"><input type="button" value="No"></a>
