@@ -64,7 +64,7 @@ module.exports = function(app, passport) {
 		res.render('deactivate', {user: req.user});
 	});
 
-	app.post('/deactivate', loggedIn, function(req, res) {
+	app.post('/deactivate/:id', loggedIn, function(req, res) {
 		User.remove({_id: req.user._id}, function(err) {
 			if (err) throw err;
 
@@ -170,7 +170,7 @@ module.exports = function(app, passport) {
 		});
 	});
 
-	app.get('/user/:username', function(req, res) {
+	app.get('/@:username', function(req, res) {
 		var username = req.params.username;
 
 		User.findOne({username: username}, function(err, user) {
@@ -186,7 +186,7 @@ module.exports = function(app, passport) {
 	});
 
 	app.get('/me', loggedIn, function(req, res) {
-		res.redirect('/user/' + req.user.username);
+		res.redirect('/@' + req.user.username);
 	})
 
 	app.get('*', function(req, res) {
