@@ -3,6 +3,8 @@ var mongoose = require('mongoose');
 var User = require('./models/user');
 var Poem = require('./models/poem');
 
+// var helpers = require('./helpers');
+
 module.exports = function(app, passport) {
 
 	app.get('/', function(req, res) {
@@ -176,6 +178,7 @@ module.exports = function(app, passport) {
 
 		User.findOne({username: username}, function(err, user) {
 			if (err) throw err;
+
 			if (!user) {
 				res.render('404')
 			} else {
