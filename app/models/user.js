@@ -9,8 +9,10 @@ var userSchema = new Schema({
 	username: { type: String, required: true, unique: true },
 	password: { type: String, required: true },
 	created_at: Date,
-	following: { type: Array, required: false },
-	followers: { type: Array, required: false }
+	relationships: {
+		following: { type: Array, required: false },
+		followers: { type: Array, required: false }
+	}
 })
 
 userSchema.pre('save', function(next) {

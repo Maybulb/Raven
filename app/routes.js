@@ -37,7 +37,8 @@ module.exports = function(app, passport) {
 			user.username = req.body.username;
 
 			user.save(function(err) {
-				if (err) throw err;
+				// get flashes to start working lol
+				if (err) console.log(err) // errors if username already exists
 			});
 
 			res.redirect(req.get('referer'));
@@ -179,9 +180,62 @@ module.exports = function(app, passport) {
 				res.render('404')
 			} else {
 				Poem.find({author: user._id}, function(err, poems) {
-					res.render('profile', {user: user, poems: poems});
-				})
+					res.render('profile', {
+						user: user,
+						poems: poems,
+						followValue: "Follow" // TODO: adjust this later
+					});
+				});
 			}
+		});
+	});
+
+	app.get('/@:username/followers', function(req, res) {
+		User.findOne({username: req.params.username}, function(err, user) {
+			if (err) throw err;
+
+			var followerIDs = user.relationships.followers
+				, followers = [];
+
+			for (var i = 0; i < followerIDs.length; i++) {
+				User.findOne({_id: followerIDs[i]}, function(err, user) {
+					followers.push(user);
+				});
+			}
+
+			res.render('followers', {followers: followers});
+		});
+	});
+
+	app.post('/follow/@:username', loggedIn, function(req, res) {
+		User.findOne({_id: req.user._id}, function(err, user) {
+			if (err) throw err;
+			User.findOne({username: req.params.username}, function(err, friend) {
+				if (err) throw err;
+
+				// you can currently follow a user a million times if you want
+				// TODO: fix this?? lol
+
+				user.relationships.following.push(friend._id);
+				friend.relationships.followers.push(user._id);
+
+				user.save(function(err, user) {
+					if (err) throw err;
+				});
+
+				friend.save(function(err, friend) {
+					if (err) throw err;
+				});
+
+				console.log(user.username + ' followed ' + friend.username);
+			});
+		});
+		res.redirect('/@' + req.params.username);
+	});
+
+	app.post('/unfollow/:username', loggedIn, function(req, res) {
+		User.findOne({_id: req.user._id}, function(err, user) {
+			
 		});
 	});
 

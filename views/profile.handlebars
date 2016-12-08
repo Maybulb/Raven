@@ -1,5 +1,9 @@
 <h2>{{user.username}}</h2>
 
+<form action="/follow/@{{user.username}}" method="post">
+	<input type="submit" value="{{followValue}}">
+</form>
+
 <ul>
 	{{#each poems}}
 		<li><a href="/poem/{{this._id}}">{{this.title}}</a></li>
