@@ -11,7 +11,16 @@ header {
 
 h2 {
   font-family: "Playfair Display", sans-serif;
-  font-size: 2em; }
+  font-size: 2em;
+  margin-bottom: 0px; }
+
+#username {
+  text-align: center; }
+
+#description {
+  margin-bottom: 20px;
+  font-size: 16px;
+  text-align: center; }
 
 .block {
   padding: 15px;

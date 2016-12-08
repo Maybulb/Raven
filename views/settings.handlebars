@@ -1,7 +1,8 @@
 <form action="/settings" method="post">
 	<p>logged in as <input type="text" value="{{user.username}}" name="username"></p>
 
-	<textarea name="description" value="{{user.description}}"></textarea><br>
+	<label for="description">User description</label>
+	<textarea name="description">{{user.description}}</textarea><br>
 
 	<input type="submit" value="Save">
 </form>

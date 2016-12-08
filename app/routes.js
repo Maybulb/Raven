@@ -150,7 +150,8 @@ module.exports = function(app, passport) {
 				res.render('poem', {
 					poem: poem,
 					author: author,
-					title: poem.title
+					title: poem.title,
+					description: poem.preview
 				});
 			});
 		});
@@ -184,7 +185,7 @@ module.exports = function(app, passport) {
 				res.render('404')
 			} else {
 				Poem.find({author: user._id}, function(err, poems) {
-					res.render('profile', {user: user, poems: poems});
+					res.render('profile', {user: user, poems: poems, description: user.description, title: user.username + " on Raven"});
 				})
 			}
 		});
