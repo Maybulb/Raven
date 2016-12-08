@@ -37,6 +37,8 @@ module.exports = function(app, passport) {
 		User.findOne({username: req.user.username}, function(err, user) {
 			user.username = req.body.username;
 
+			user.description = req.body.description;
+
 			user.save(function(err) {
 				if (err) throw err;
 			});
