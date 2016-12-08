@@ -23,11 +23,17 @@ module.exports = function(app, passport) {
 		});
 
 		poem.save(function(err, poem) {
-			if (err) res.send(err);
-
-			res.redirect('/poem/' + poem._id)
+			if (err) {
+				res.redirect('/post')
+			} else {
+				res.redirect('/poem/' + poem._id)
+			}
 		});
 	});
+
+	app.get('/post', function(req, res) {
+		res.render('post');
+	})
 
 	app.get('/settings', loggedIn, function(req, res) {
 		res.render('settings', {user: req.user, title: req.user.username});
