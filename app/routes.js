@@ -13,7 +13,7 @@ module.exports = function(app, passport) {
 		}
 	});
 
-	app.post('/', loggedIn, function(req, res) {
+	app.post('/post', loggedIn, function(req, res) {
 		// post a poem
 		var poem = new Poem({
 			title: req.body.title,
