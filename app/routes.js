@@ -150,7 +150,7 @@ module.exports = function(app, passport) {
 				res.render('poem', {
 					poem: poem,
 					author: author,
-					title: poem.title,
+					title: poem.title + " by " + author.username + " on Raven",
 					description: poem.preview
 				});
 			});

@@ -11,11 +11,11 @@ header {
 
 h2 {
   font-family: "Playfair Display", sans-serif;
-  font-size: 2em;
-  margin-bottom: 0px; }
+  font-size: 2em; }
 
 #username {
-  text-align: center; }
+  text-align: center;
+  margin-bottom: 0px; }
 
 #description {
   margin-bottom: 20px;
