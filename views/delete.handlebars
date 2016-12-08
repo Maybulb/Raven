@@ -1,11 +1,19 @@
-<div class="row">
-	<h2>Are you sure you want to delete <i>{{poem.title}}</i>?
-	<div class="six columns">
-		<form action="/delete/{{poem._id}}" method="post">
-			<input type="submit" value="Yes">
-		</form>
+{{#if poem}}
+	<div class="row">
+		<h2>Are you sure you want to delete <i>{{poem.title}}</i>?
+		<div class="six columns">
+			<form action="/delete/{{poem._id}}" method="post">
+				<input type="submit" value="Yes">
+			</form>
+		</div>
+		<div class="six columns">
+			<a href="/poem/{{poem._id}}"><input type="button" value="No"></a>
+		</div>
 	</div>
-	<div class="six columns">
-		<a href="/poem/{{poem._id}}"><input type="button" value="No"></a>
+{{else}}
+	<div class="row">
+		<div class="six columns">
+			<h2>this poem does not belong to you.</h2>
+		</div>
 	</div>
-</div>
+{{/if}}

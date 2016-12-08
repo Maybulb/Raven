@@ -53,20 +53,31 @@ module.exports = function(app, passport) {
 		});
 	});
 
-	app.get('/delete/:id', function(req, res) {
+	app.get('/delete/:id', loggedIn, function(req, res) {
 		Poem.findOne({_id: req.params.id}, function(err, poem) {
-			if (err) throw err;
-			
-			res.render('delete', {poem: poem});
+			if (err) console.log(err);
+
+			if (String(poem.author) === String(req.user._id)) {
+				console.log('this poem belongs to you');
+				res.render('delete', {poem: poem});
+			} else {
+				console.log('this poem does not belong to you');
+				res.render('delete')
+			}
 		});
 	});
 
-	app.post('/delete/:id', function(req, res) {
-		Poem.remove({_id: req.params.id}, function(err) {
-			if (err) throw err;
-
-			res.redirect('/me');
-		});
+	app.post('/delete/:id', loggedIn, function(req, res) {
+		Poem.findOne({_id: req.params.id}, function(err, poem) {
+			if (poem.author === req.user._id) {
+				// we good to delete! it belongs to the user
+				poem.remove().exec();
+				res.redirect('/me');
+			} else {
+				// that's not your poem dude
+				res.redirect('/me');
+			}
+		})
 	});
 
 	app.get('/deactivate', loggedIn, function(req, res) {
