@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var User = require('./models/user');
 var Poem = require('./models/poem');
 
-// var helpers = require('./helpers');
+var helpers = require('./helpers');
 
 module.exports = function(app, passport) {
 
@@ -215,6 +215,12 @@ module.exports = function(app, passport) {
 			if (err) throw err;
 			User.findOne({username: req.params.username}, function(err, friend) {
 				if (err) throw err;
+
+				if (helpers.isFollowing(user, friend) === true) {
+					console.log("yes")
+				} else {
+					console.log("no")
+				}
 
 				// you can currently follow a user a million times if you want
 				// TODO: fix this?? lol
