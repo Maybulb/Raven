@@ -59,3 +59,56 @@ input, textarea {
 		border-color: $black !important;
 	}
 }
+
+.full-height {
+	min-height: 100%;
+}
+
+.cardlink {
+	&:hover {
+		border-bottom: none;
+	}
+}
+
+.card {
+	border: black solid 1px;
+	border-radius: 5px;
+	padding: 15px;
+	// box-shadow: 1px 1px 10px 0px rgba(0,0,0,0.75);
+	margin-bottom: 10px;
+	display: inline-block;
+	overflow: hidden;
+	h5 {
+		text-align: center;
+		margin-bottom: 0;
+		font-weight: bold;
+	}
+	p {
+		width: 100%;
+		margin: 0;
+		line-height: 1.2em;
+	}
+	hr {
+		border: 0;
+	    height: 1px;
+	    background: #333;
+	    background-image: linear-gradient(to right, #ccc, #333, #ccc);
+	    margin-top: 10px;
+	    margin-bottom: 10px;
+	}
+	.fade {
+	  	position: relative;
+	  	height: 6em;
+	  	overflow: hidden;
+	}
+	.fade:after {
+	  	content: "";
+	  	text-align: right;
+	  	position: absolute;
+	  	bottom: 0;
+	  	right: 0;
+	  	width: 60%;
+	  	height: 1.2em;
+	  	background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 50%);
+	}
+}

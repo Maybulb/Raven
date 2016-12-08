@@ -7,6 +7,7 @@ var poemSchema = new Schema({
 	title: { type: String, required: true, unique: true },
 	content: { type: String, required: true },
 	author: { type: ObjectId, required: true },
+	preview: { type: String, required: true },
 	created_at: Date
 })
 

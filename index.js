@@ -20,8 +20,28 @@ app.use(session({
 	resave: true
 }));
 
+var hbs = exphbs.create({
+	helpers: {
+		groupeach: function(every, context, options) {
+		    var out = "", subcontext = [], i;
+		    if (context && context.length > 0) {
+		        for (i = 0; i < context.length; i++) {
+		            if (i > 0 && i % every === 0) {
+		                out += options.fn(subcontext);
+		                subcontext = [];
+		            }
+		            subcontext.push(context[i]);
+		        }
+		        out += options.fn(subcontext);
+		    }
+		    return out;
+		}
+	},
+	defaultLayout: "main"
+})
+
 // app config
-app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 app.use(express.static('public'));
 app.use(bodyParser.json());

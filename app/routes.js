@@ -18,7 +18,8 @@ module.exports = function(app, passport) {
 		var poem = new Poem({
 			title: req.body.title,
 			content: req.body.poem,
-			author: req.user._id
+			author: req.user._id,
+			preview: req.body.poem.replace(/(?:\r\n|\r|\n)/g, " / ")
 		});
 
 		poem.save(function(err, poem) {
@@ -93,6 +94,8 @@ module.exports = function(app, passport) {
 
 			poem.title = req.body.title;
 			poem.content = req.body.content;
+			poem.preview = req.body.content.replace(/(?:\r\n|\r|\n)/g, " / ");
+			console.log(poem.preview)
 
 			poem.save(function(err, poem) {
 				if (err) throw err;
