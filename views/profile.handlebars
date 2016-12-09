@@ -1,7 +1,7 @@
 <h2>{{user.username}}</h2>
 
-<form action="/follow/@{{user.username}}" method="post">
-	<input type="submit" value="{{followValue}}">
+<form action="/{{button.url}}/@{{user.username}}" method="post">
+	<input type="submit" value="{{button.value}}">
 </form>
 
 <ul>

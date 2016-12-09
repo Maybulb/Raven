@@ -183,11 +183,16 @@ module.exports = function(app, passport) {
 				res.render('404')
 			} else {
 				Poem.find({author: user._id}, function(err, poems) {
-					res.render('profile', {
-						user: user,
-						poems: poems,
-						followValue: "Follow" // TODO: adjust this later
-					});
+					if (req.user) {
+						// if the user is logged in
+						if (helpers.isFollowing(req.user, user)) {
+							var button = {value: "Unfollow", url: "unfollow"}
+						} else {
+							var button = {value: "Follow", url: "follow"}
+						}
+					}
+
+					res.render('profile', {user: user, poems: poems, button: button});
 				});
 			}
 		});
@@ -212,18 +217,13 @@ module.exports = function(app, passport) {
 
 	app.post('/follow/@:username', loggedIn, function(req, res) {
 		User.findOne({_id: req.user._id}, function(err, user) {
-			if (err) throw err;
+			if (err) console.log(err);
 			User.findOne({username: req.params.username}, function(err, friend) {
 				if (err) throw err;
 
-				if (helpers.isFollowing(user, friend) === true) {
-					console.log("yes")
-				} else {
-					console.log("no")
+				if (helpers.isFollowing(user, friend)) {
+					return console.log('already following user');
 				}
-
-				// you can currently follow a user a million times if you want
-				// TODO: fix this?? lol
 
 				user.relationships.following.push(friend._id);
 				friend.relationships.followers.push(user._id);
@@ -242,10 +242,32 @@ module.exports = function(app, passport) {
 		res.redirect('/@' + req.params.username);
 	});
 
-	app.post('/unfollow/:username', loggedIn, function(req, res) {
+	app.post('/unfollow/@:username', loggedIn, function(req, res) {
 		User.findOne({_id: req.user._id}, function(err, user) {
-			
+			if (err) console.log(err);
+
+			User.findOne({username: req.params.username}, function(err, friend) {
+				if (err) return res.render('error', {error: err});
+
+				if (!helpers.isFollowing(user, friend)) {
+					return console.log('you are not following that user');
+				}
+
+				user.relationships.following.pull(friend._id);
+				friend.relationships.followers.pull(user._id);
+
+				user.save(function(err, user) {
+					if (err) throw err;
+				});
+
+				friend.save(function(err, friend) {
+					if (err) throw err;
+				});
+
+				console.log(user.username + ' unfollowed ' + friend.username);
+			});
 		});
+		res.redirect('/@' + req.params.username);
 	});
 
 	app.get('/me', loggedIn, function(req, res) {
@@ -254,7 +276,7 @@ module.exports = function(app, passport) {
 
 	app.get('*', function(req, res) {
 		res.render('404');
-	})
+	});
 
 	function loggedIn(req, res, next) {
 		if (req.isAuthenticated()) return next();
