@@ -9,11 +9,12 @@ var userSchema = new Schema({
 	username: { type: String, required: true, unique: true },
 	password: { type: String, required: true },
 	created_at: Date,
+	description: String,
 	relationships: {
 		following: { type: Array, required: false },
 		followers: { type: Array, required: false }
 	}
-})
+});
 
 userSchema.pre('save', function(next) {
 	var user = this;

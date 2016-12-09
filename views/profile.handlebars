@@ -1,11 +1,24 @@
-<h2>{{user.username}}</h2>
+<h2 id="username">{{user.username}}</h2>
+<p id="description">{{user.description}}</p>
 
 <form action="/{{button.url}}/@{{user.username}}" method="post">
 	<input type="submit" value="{{button.value}}">
 </form>
 
-<ul>
-	{{#each poems}}
-		<li><a href="/poem/{{this._id}}">{{this.title}}</a></li>
+{{#groupeach 3 poems}}
+<div class="row">
+	{{#each this}}
+	<div class="four columns full-height">
+		<a class="cardlink" href="/poem/{{this._id}}">
+			<div class="card">
+				<h5>{{this.title}}</h5>
+				<hr>
+				<div class="fade">
+					<p >{{this.preview}}</p>
+				</div>
+			</div>
+		</a>
+	</div>
 	{{/each}}
-</ul>
+</div>
+{{/groupeach}}

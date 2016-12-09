@@ -13,6 +13,15 @@ h2 {
   font-family: "Playfair Display", sans-serif;
   font-size: 2em; }
 
+#username {
+  text-align: center;
+  margin-bottom: 0px; }
+
+#description {
+  margin-bottom: 20px;
+  font-size: 16px;
+  text-align: center; }
+
 .block {
   padding: 15px;
   border-radius: 5px; }
@@ -36,11 +45,53 @@ input[type=text]#name {
   height: 110%; }
 
 textarea#poem {
-  font-size: 1.5em;
-  height: 150%; }
+  font-size: 1em;
+  height: 300px; }
 
 input[type=submit] {
   font-family: "Playfair Display", sans-serif !important; }
 
 input:focus, textarea:focus {
   border-color: #111111 !important; }
+
+.full-height {
+  min-height: 100%; }
+
+.cardlink:hover {
+  border-bottom: none; }
+
+.card {
+  border: black solid 1px;
+  border-radius: 5px;
+  padding: 15px;
+  margin-bottom: 10px;
+  display: inline-block;
+  overflow: hidden; }
+  .card h5 {
+    text-align: center;
+    margin-bottom: 0;
+    font-weight: bold; }
+  .card p {
+    width: 100%;
+    margin: 0;
+    line-height: 1.2em; }
+  .card hr {
+    border: 0;
+    height: 1px;
+    background: #333;
+    background-image: linear-gradient(to right, #ccc, #333, #ccc);
+    margin-top: 10px;
+    margin-bottom: 10px; }
+  .card .fade {
+    position: relative;
+    height: 6em;
+    overflow: hidden; }
+  .card .fade:after {
+    content: "";
+    text-align: right;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 60%;
+    height: 1.2em;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0), white 50%); }

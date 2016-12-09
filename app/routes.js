@@ -15,20 +15,27 @@ module.exports = function(app, passport) {
 		}
 	});
 
-	app.post('/', loggedIn, function(req, res) {
+	app.post('/post', loggedIn, function(req, res) {
 		// post a poem
 		var poem = new Poem({
 			title: req.body.title,
 			content: req.body.poem,
-			author: req.user._id
+			author: req.user._id,
+			preview: req.body.poem.replace(/(?:\r\n|\r|\n)/g, " / ")
 		});
 
 		poem.save(function(err, poem) {
-			if (err) res.send(err);
-
-			res.redirect('/poem/' + poem._id)
+			if (err) {
+				res.redirect('/post')
+			} else {
+				res.redirect('/poem/' + poem._id)
+			}
 		});
 	});
+
+	app.get('/post', function(req, res) {
+		res.render('post');
+	})
 
 	app.get('/settings', loggedIn, function(req, res) {
 		res.render('settings', {user: req.user, title: req.user.username});
@@ -37,6 +44,8 @@ module.exports = function(app, passport) {
 	app.post('/settings', loggedIn, function(req, res) {
 		User.findOne({username: req.user.username}, function(err, user) {
 			user.username = req.body.username;
+
+			user.description = req.body.description;
 
 			user.save(function(err) {
 				// get flashes to start working lol
@@ -47,20 +56,34 @@ module.exports = function(app, passport) {
 		});
 	});
 
-	app.get('/delete/:id', function(req, res) {
+	app.get('/delete/:id', loggedIn, function(req, res) {
 		Poem.findOne({_id: req.params.id}, function(err, poem) {
-			if (err) throw err;
-			
-			res.render('delete', {poem: poem});
+			if (err) console.log(err);
+
+			if (String(poem.author) === String(req.user._id)) {
+				res.render('delete', {poem: poem});
+			} else {
+				res.render('delete')
+			}
 		});
 	});
 
-	app.post('/delete/:id', function(req, res) {
-		Poem.remove({_id: req.params.id}, function(err) {
-			if (err) throw err;
+	app.post('/delete/:id', loggedIn, function(req, res) {
+		Poem.findOne({_id: req.params.id}, function(err, poem) {
+			if (String(poem.author) === String(req.user._id)) {
+				// we good to delete! it belongs to the user
+				Poem.remove({_id: poem._id}, function(err, poem) {
+					if (err) console.log(err);
+					
+					console.log('deleted post');
+				});
 
-			res.redirect('/me');
-		});
+				res.redirect('/me');
+			} else {
+				// that's not your poem dude
+				res.redirect('/me');
+			}
+		})
 	});
 
 	app.get('/deactivate', loggedIn, function(req, res) {
@@ -96,6 +119,8 @@ module.exports = function(app, passport) {
 
 			poem.title = req.body.title;
 			poem.content = req.body.content;
+			poem.preview = req.body.content.replace(/(?:\r\n|\r|\n)/g, " / ");
+			console.log(poem.preview)
 
 			poem.save(function(err, poem) {
 				if (err) throw err;
@@ -148,7 +173,8 @@ module.exports = function(app, passport) {
 				res.render('poem', {
 					poem: poem,
 					author: author,
-					title: poem.title
+					title: poem.title + " by " + author.username + " on Raven",
+					description: poem.preview
 				});
 			});
 		});
