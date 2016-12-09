@@ -58,10 +58,8 @@ module.exports = function(app, passport) {
 			if (err) console.log(err);
 
 			if (String(poem.author) === String(req.user._id)) {
-				console.log('this poem belongs to you');
 				res.render('delete', {poem: poem});
 			} else {
-				console.log('this poem does not belong to you');
 				res.render('delete')
 			}
 		});
@@ -69,9 +67,14 @@ module.exports = function(app, passport) {
 
 	app.post('/delete/:id', loggedIn, function(req, res) {
 		Poem.findOne({_id: req.params.id}, function(err, poem) {
-			if (poem.author === req.user._id) {
+			if (String(poem.author) === String(req.user._id)) {
 				// we good to delete! it belongs to the user
-				poem.remove().exec();
+				Poem.remove({_id: poem._id}, function(err, poem) {
+					if (err) console.log(err);
+					
+					console.log('deleted post');
+				});
+
 				res.redirect('/me');
 			} else {
 				// that's not your poem dude

@@ -45,8 +45,8 @@ input[type=text]#name {
   height: 110%; }
 
 textarea#poem {
-  font-size: 1.5em;
-  height: 150%; }
+  font-size: 1em;
+  height: 300px; }
 
 input[type=submit] {
   font-family: "Playfair Display", sans-serif !important; }
