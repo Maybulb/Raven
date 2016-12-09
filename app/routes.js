@@ -245,7 +245,9 @@ module.exports = function(app, passport) {
 		User.findOne({_id: req.user._id}, function(err, user) {
 			if (err) console.log(err);
 			User.findOne({username: req.params.username}, function(err, friend) {
-				if (err) throw err;
+				if (err) return res.render('error', {error: err});
+
+				if (user._id === friend._id) return;
 
 				if (helpers.isFollowing(user, friend)) {
 					return console.log('already following user');
@@ -274,6 +276,8 @@ module.exports = function(app, passport) {
 
 			User.findOne({username: req.params.username}, function(err, friend) {
 				if (err) return res.render('error', {error: err});
+
+				if (user._id === friend._id) return;
 
 				if (!helpers.isFollowing(user, friend)) {
 					return console.log('you are not following that user');
