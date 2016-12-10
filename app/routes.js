@@ -191,13 +191,22 @@ module.exports = function(app, passport) {
 	})
 
 	// testing, remove in production
-	app.get('/users', function(req, res) {
+	app.get('/users.json', function(req, res) {
 		User.find({}, function(err, users) {
 			if (err) throw err;
 
 			res.send(users);
 		});
 	});
+
+	// testing, remove in production
+	app.get('/poems.json', function(req, res) {
+		Poem.find({}, function(err, poems) {
+			if (err) throw err;
+
+			res.send(poems);
+		})
+	})
 
 	app.get('/@:username', function(req, res) {
 		var username = req.params.username;
