@@ -209,16 +209,25 @@ module.exports = function(app, passport) {
 				res.render('404')
 			} else {
 				Poem.find({author: user._id}, function(err, poems) {
+					var follow_block = true
+						, button = {value: "Follow", url: "follow"};
+
 					if (req.user) {
 						// if the user is logged in
 						if (helpers.isFollowing(req.user, user)) {
-							var button = {value: "Unfollow", url: "unfollow"}
-						} else {
-							var button = {value: "Follow", url: "follow"}
+							button = {value: "Unfollow", url: "unfollow"}
 						}
+
+						// if logged in user is this user disable follow block
+						if (username === req.user.username) follow_block = false;
 					}
 
-					res.render('profile', {user: user, poems: poems, button: button});
+					res.render('profile', {
+						user: user,
+						poems: poems,
+						button: button,
+						follow_block: follow_block
+					});
 				});
 			}
 		});

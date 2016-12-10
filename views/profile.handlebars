@@ -1,9 +1,11 @@
 <h2 id="username">{{user.username}}</h2>
 <p id="description">{{user.description}}</p>
 
-<form action="/{{button.url}}/@{{user.username}}" method="post">
-	<input type="submit" value="{{button.value}}">
-</form>
+{{#if follow_block}}
+	<form action="/{{button.url}}/@{{user.username}}" method="post">
+		<input type="submit" value="{{button.value}}">
+	</form>
+{{/if}}
 
 {{#groupeach 3 poems}}
 <div class="row">
