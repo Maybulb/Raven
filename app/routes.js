@@ -92,7 +92,7 @@ module.exports = function(app, passport) {
 
 	app.post('/deactivate/:id', loggedIn, function(req, res) {
 		User.remove({_id: req.user._id}, function(err) {
-			if (err) throw err;
+			if (err) return res.render('error', {error: err});
 
 			Poem.find({author: req.user._id}).remove().exec();
 
@@ -100,10 +100,9 @@ module.exports = function(app, passport) {
 		})
 	});
 
-	app.get('/edit/:id', function(req, res) {
+	app.get('/edit/:id', loggedIn, function(req, res) {
 		Poem.findOne({_id: req.params.id}, function(err, poem) {
-			if (req.user == null || poem.id == null) res.redirect('/login');
-			if (err) throw err;
+			if (!poem.id) return res.render('error', {error: err});
 
 			if (String(poem.author) === String(req.user._id)) {
 				res.render('edit', {poem: poem})
@@ -113,7 +112,7 @@ module.exports = function(app, passport) {
 		});
 	});
 
-	app.post('/edit/:id', function(req, res) {
+	app.post('/edit/:id', loggedIn, function(req, res) {
 		Poem.findOne({_id: req.params.id}, function(err, poem) {
 			if (err) return console.log(err);
 
@@ -123,7 +122,7 @@ module.exports = function(app, passport) {
 			console.log(poem.preview)
 
 			poem.save(function(err, poem) {
-				if (err) throw err;
+				if (err) return res.render('error', {error: err});
 
 				res.redirect('/poem/' + poem._id);
 			});
@@ -165,10 +164,10 @@ module.exports = function(app, passport) {
 		var id = req.params.id;
 
 		Poem.findOne({_id: id}, function(err, poem) {
-			if (err) res.send(err);
+			if (err) return res.render('error', {error: err});
 
 			User.findOne({_id: poem.author}, function(err, author) {
-				if (err) res.send(err);
+				if (err) return res.render('error', {error: err});
 
 				res.render('poem', {
 					poem: poem,
@@ -184,7 +183,7 @@ module.exports = function(app, passport) {
 	// testing, remove in production
 	app.get('/poems', function(req, res) {
 		Poem.find({}, function(err, poems) {
-			if (err) throw err;
+			if (err) return res.render('error', {error: err});
 
 			res.send(poems);
 		})
@@ -193,7 +192,7 @@ module.exports = function(app, passport) {
 	// testing, remove in production
 	app.get('/users.json', function(req, res) {
 		User.find({}, function(err, users) {
-			if (err) throw err;
+			if (err) return res.render('error', {error: err});
 
 			res.send(users);
 		});
@@ -202,7 +201,7 @@ module.exports = function(app, passport) {
 	// testing, remove in production
 	app.get('/poems.json', function(req, res) {
 		Poem.find({}, function(err, poems) {
-			if (err) throw err;
+			if (err) return res.render('error', {error: err});
 
 			res.send(poems);
 		})
@@ -212,7 +211,7 @@ module.exports = function(app, passport) {
 		var username = req.params.username;
 
 		User.findOne({username: username}, function(err, user) {
-			if (err) throw err;
+			if (err) return res.render('error', {error: err});
 
 			if (!user) {
 				res.render('404')
@@ -244,7 +243,7 @@ module.exports = function(app, passport) {
 
 	app.get('/@:username/followers', function(req, res) {
 		User.findOne({username: req.params.username}, function(err, user) {
-			if (err) throw err;
+			if (err) return res.render('error', {error: err});
 
 			var followerIDs = user.relationships.followers
 				, followers = [];
@@ -275,11 +274,11 @@ module.exports = function(app, passport) {
 				friend.relationships.followers.push(user._id);
 
 				user.save(function(err, user) {
-					if (err) throw err;
+					if (err) return res.render('error', {error: err});
 				});
 
 				friend.save(function(err, friend) {
-					if (err) throw err;
+					if (err) return res.render('error', {error: err});
 				});
 
 				console.log(user.username + ' followed ' + friend.username);
@@ -305,11 +304,11 @@ module.exports = function(app, passport) {
 				friend.relationships.followers.pull(user._id);
 
 				user.save(function(err, user) {
-					if (err) throw err;
+					if (err) return res.render('error', {error: err});
 				});
 
 				friend.save(function(err, friend) {
-					if (err) throw err;
+					if (err) return res.render('error', {error: err});
 				});
 
 				console.log(user.username + ' unfollowed ' + friend.username);
