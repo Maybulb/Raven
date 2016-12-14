@@ -31,10 +31,10 @@ Takes 2 parameters through body (`title`, `body`), and creates a `Poem` object w
 
 ```json
 {
-	title: String,
-	body: String,
-	author: ObjectID,
-	preview: String
+	"title": String,
+	"body": String,
+	"author": ObjectID,
+	"preview": String
 }
 ```
 
@@ -85,7 +85,6 @@ Displays the poem with ID `:id`. If poem does not exist, redirect to `error.hand
 ### `GET /@:username`
 Returns user's profile page, containing all poems/other content, if user/username exists. If authenticated user is not `:username`, also display follow button.
 
-
 ### `GET /@:username/followers`
 Returns the list of followers for `:username`.
 
@@ -108,15 +107,15 @@ Returns all user objects in JSON.
 
 ```json
 {
-	_id: "58490820d25a14000485d091",
-	created_at: "2016-12-08T07:13:36.901Z",
-	username: "test",
-	password: "$2a$10$vn0cUDytQEpZMq1uBsbSZeSCd9CMa",
-	relationships: {
-		followers: ["51223123123", "131231235"],
-		following: ["134987138", "18937129837"],
+	"_id": "58490820d25a14000485d091",
+	"created_at": "2016-12-08T07:13:36.901Z",
+	"username": "test",
+	"password": "$2a$10$vn0cUDytQEpZMq1uBsbSZeSCd9CMa",
+	"relationships": {
+		"followers": ["51223123123", "131231235"],
+		"following": ["134987138", "18937129837"],
 	},
-	__v: 0
+	"__v": 0
 }
 ```
 
@@ -125,13 +124,13 @@ Returns all poem objects in JSON.
 
 ```json
 {
-	_id: "584908f1d10bb40004a134ea",
-	created_at: "2016-12-08T07:17:05.576Z",
-	title: "you say",
-	content: "this is the poem. i dont know",
-	author: "58490820d25a140f0485d091",
-	preview: "this is the poem. / i dont know.,
-	__v: 0
+	"_id": "584908f1d10bb40004a134ea",
+	"created_at": "2016-12-08T07:17:05.576Z",
+	"title": "you say",
+	"content": "this is the poem. i dont know",
+	"author": "58490820d25a140f0485d091",
+	"preview": "this is the poem. / i dont know.,
+	"__v": 0
 },
 ```
 
