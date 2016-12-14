@@ -91,6 +91,10 @@ module.exports = function(app, passport) {
 	});
 
 	app.post('/deactivate/:id', loggedIn, function(req, res) {
+		if (String(req.user._id) !== String(req.user._id)) {
+			return res.render('error': {error: "that's not your profile :)"});
+		}
+
 		User.remove({_id: req.user._id}, function(err) {
 			if (err) return res.render('error', {error: err});
 
@@ -116,10 +120,13 @@ module.exports = function(app, passport) {
 		Poem.findOne({_id: req.params.id}, function(err, poem) {
 			if (err) return console.log(err);
 
+			if (String(poem.author) !== String(req.user._id)) {
+				return res.render('error', {error: "that's not your account"});
+			}
+
 			poem.title = req.body.title;
 			poem.content = req.body.content;
 			poem.preview = req.body.content.replace(/(?:\r\n|\r|\n)/g, " / ");
-			console.log(poem.preview)
 
 			poem.save(function(err, poem) {
 				if (err) return res.render('error', {error: err});
@@ -161,9 +168,7 @@ module.exports = function(app, passport) {
 	}));
 
 	app.get('/poem/:id', function(req, res) {
-		var id = req.params.id;
-
-		Poem.findOne({_id: id}, function(err, poem) {
+		Poem.findOne({_id: req.params.id}, function(err, poem) {
 			if (err) return res.render('error', {error: err});
 
 			User.findOne({_id: poem.author}, function(err, author) {
@@ -181,7 +186,7 @@ module.exports = function(app, passport) {
 	});
 
 	// testing, remove in production
-	app.get('/poems', function(req, res) {
+	app.get('/poems.json', function(req, res) {
 		Poem.find({}, function(err, poems) {
 			if (err) return res.render('error', {error: err});
 
