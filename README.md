@@ -129,7 +129,7 @@ Returns all poem objects in JSON.
 	"title": "you say",
 	"content": "this is the poem. i dont know",
 	"author": "58490820d25a140f0485d091",
-	"preview": "this is the poem. / i dont know.,
+	"preview": "this is the poem. / i dont know.",
 	"__v": 0
 },
 ```
