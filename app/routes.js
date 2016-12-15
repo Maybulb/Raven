@@ -33,7 +33,7 @@ module.exports = function(app, passport) {
 		});
 	});
 
-	app.get('/post', function(req, res) {
+	app.get('/post', loggedIn, function(req, res) {
 		res.render('post');
 	})
 
