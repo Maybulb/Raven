@@ -6,7 +6,7 @@ var ObjectId = Schema.ObjectId;
 var poemSchema = new Schema({
 	title: { type: String, required: true, unique: true },
 	content: { type: String, required: true },
-	author: { type: ObjectId, required: true },
+	author: { type: ObjectId, ref: 'User', required: true },
 	preview: { type: String, required: true },
 	created_at: Date
 })

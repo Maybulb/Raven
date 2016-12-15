@@ -10,9 +10,10 @@ var userSchema = new Schema({
 	password: { type: String, required: true },
 	created_at: Date,
 	description: String,
+	poems: [{ type: Schema.Types.ObjectId, ref: 'Poem' }],
 	relationships: {
-		following: { type: Array, required: false },
-		followers: { type: Array, required: false }
+		followers: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+		following: [{ type: Schema.Types.ObjectId, ref: 'User' }]
 	}
 });
 
