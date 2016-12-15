@@ -92,7 +92,7 @@ module.exports = function(app, passport) {
 
 	app.post('/deactivate/:id', loggedIn, function(req, res) {
 		if (String(req.user._id) !== String(req.user._id)) {
-			return res.render('error': {error: "that's not your profile :)"});
+			return res.render({error: "that's not your profile :)"});
 		}
 
 		User.remove({_id: req.user._id}, function(err) {
