@@ -196,11 +196,15 @@ module.exports = function(app, passport) {
 
 	// testing, remove in production
 	app.get('/users.json', function(req, res) {
-		User.find({}, function(err, users) {
-			if (err) return res.render('error', {error: err});
 
-			res.send(users);
-		});
+		User
+			.find({})
+			.populate('poem')
+			.exec(function(err, users) {
+				if (err) return res.render('error', {error: err});
+
+				res.send(users);
+			});
 	});
 
 	// testing, remove in production
