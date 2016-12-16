@@ -28,6 +28,8 @@ module.exports = function(app, passport) {
 			if (err) {
 				res.redirect('/post')
 			} else {
+				req.user.poems.push(poem.id);
+				console.log(req.user.poems);
 				res.redirect('/poem/' + poem._id)
 			}
 		});
@@ -199,7 +201,10 @@ module.exports = function(app, passport) {
 
 		User
 			.find({})
-			.populate('poem')
+			.populate({
+				path: 'poem',
+				select: 'author -_id',
+			})
 			.exec(function(err, users) {
 				if (err) return res.render('error', {error: err});
 

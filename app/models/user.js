@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var bcrypt = require('bcrypt');
 
 var Schema = mongoose.Schema;
+var ObjectId = Schema.ObjectId
 
 var SALT_FACTOR = 10;
 
@@ -10,10 +11,10 @@ var userSchema = new Schema({
 	password: { type: String, required: true },
 	created_at: Date,
 	description: String,
-	poems: [{ type: Schema.Types.ObjectId, ref: 'Poem' }],
+	poems: [{ type: ObjectId, ref: 'Poem' }],
 	relationships: {
-		followers: [{ type: Schema.Types.ObjectId, ref: 'User' }],
-		following: [{ type: Schema.Types.ObjectId, ref: 'User' }]
+		followers: [{ type: ObjectId, ref: 'User' }],
+		following: [{ type: ObjectId, ref: 'User' }]
 	}
 });
 
