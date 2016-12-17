@@ -15,29 +15,29 @@ var port = process.env.PORT || 8080;
 
 // sessions
 app.use(session({
-	secret: 'sljdfhalsdkfj',
-	saveUninitialized: true,
-	resave: true
+  secret: 'sljdfhalsdkfj',
+  saveUninitialized: true,
+  resave: true
 }));
 
 var hbs = exphbs.create({
-	helpers: {
-		groupeach: function(every, context, options) {
-		    var out = "", subcontext = [], i;
-		    if (context && context.length > 0) {
-		        for (i = 0; i < context.length; i++) {
-		            if (i > 0 && i % every === 0) {
-		                out += options.fn(subcontext);
-		                subcontext = [];
-		            }
-		            subcontext.push(context[i]);
-		        }
-		        out += options.fn(subcontext);
-		    }
-		    return out;
-		}
-	},
-	defaultLayout: "main"
+  helpers: {
+    groupeach: function(every, context, options) {
+        var out = "", subcontext = [], i;
+        if (context && context.length > 0) {
+            for (i = 0; i < context.length; i++) {
+                if (i > 0 && i % every === 0) {
+                    out += options.fn(subcontext);
+                    subcontext = [];
+                }
+                subcontext.push(context[i]);
+            }
+            out += options.fn(subcontext);
+        }
+        return out;
+    }
+  },
+  defaultLayout: "main"
 })
 
 // app config
@@ -63,5 +63,5 @@ require('./config/passport')(passport);
 require('./app/routes.js')(app, passport);
 
 app.listen(port, function() {
-	console.log('watching port', port);
+  console.log('watching port', port);
 });
