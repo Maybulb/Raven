@@ -1,48 +1,27 @@
 {
-  "name": "raven",
+  "name": "Raven",
   "version": "1.0.0",
   "description": "Only this and nothing more.",
   "main": "index.js",
+  "repository": "https://github.com/maybulb/raven",
+  "author": "Maybulb",
+  "license": "MPL-2.0",
   "dependencies": {
-    "bcrypt": "^0.8.7",
+    "bcrypt": "^1.0.1",
     "body-parser": "^1.15.2",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.3",
     "express": "^4.14.0",
     "express-handlebars": "^3.0.0",
     "express-messages": "^1.0.1",
-    "express-session": "^1.14.0",
+    "express-session": "^1.14.2",
     "moment": "^2.17.1",
-    "mongoose": "^4.5.9",
+    "mongoose": "^4.7.3",
     "morgan": "^1.7.0",
     "passport": "^0.3.2",
     "passport-google-oauth": "^1.0.0",
     "passport-http": "^0.3.0",
     "passport-local": "^1.0.0",
     "passport-twitter": "^1.0.4"
-  },
-  "devDependencies": {
-    "gulp": "^3.9.1",
-    "gulp-sass": "^2.3.2",
-    "nodemon": "^1.10.2"
-  },
-  "scripts": {
-    "test": "node index.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ravenpoetry/raven.git"
-  },
-  "keywords": [
-    "raven",
-    "poetry",
-    "poems",
-    "network"
-  ],
-  "author": "Josh Trommel",
-  "license": "MPL-2.0",
-  "bugs": {
-    "url": "https://github.com/ravenpoetry/raven/issues"
-  },
-  "homepage": "https://github.com/ravenpoetry/raven#readme"
+  }
 }

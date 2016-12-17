@@ -136,4 +136,4 @@ Returns all poem objects in JSON.
 
 
 # LICENSE
-[MLP 2.0](LICENSE)
+[MPL 2.0](LICENSE)
