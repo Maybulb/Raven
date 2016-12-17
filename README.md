@@ -8,7 +8,7 @@ Raven is a network to share poetry, and all the creative ideas that come with it
 ## Development
 
 ```bash
-git clone https://github.com/ravenpoetry/raven
+git clone https://github.com/maybulb/raven
 
 cd raven && npm i
 node index.js
