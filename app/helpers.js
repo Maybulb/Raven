@@ -1,4 +1,3 @@
-// doesn't work yet :)
 var User = require('./models/user');
 var Poem = require('./models/poem');
 

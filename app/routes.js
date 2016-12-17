@@ -9,7 +9,16 @@ module.exports = function(app, passport) {
 
 	app.get('/', function(req, res) {
 		if (req.isAuthenticated()) {
-			res.render('home', {user: req.user, title: 'Post'});
+			Poem
+				.find({
+					'author': { $in: req.user.relationships.following }
+				})
+				.sort({created_at: -1})
+				.exec(function(err, poems) {
+					if (err) return res.render('error', {error: err});
+
+					res.render('home', {poems: poems});
+				});
 		} else {
 			res.render('index');
 		}
