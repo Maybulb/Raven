@@ -1,4 +1,5 @@
-var mongoose = require('mongoose');
+var mongoose = require('mongoose')
+  , moment = require('moment');
 
 var User = require('./models/user');
 var Poem = require('./models/poem');
@@ -49,7 +50,12 @@ module.exports = function(app, passport) {
   })
 
   app.get('/settings', loggedIn, function(req, res) {
-    res.render('settings', {user: req.user, title: req.user.username});
+    var timeAgo = moment(req.user.created_at).fromNow();
+    res.render('settings', {
+      user: req.user,
+      title: req.user.username,
+      time_ago: timeAgo
+    });
   });
 
   app.post('/settings', loggedIn, function(req, res) {

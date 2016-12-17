@@ -12,6 +12,7 @@
     "express-handlebars": "^3.0.0",
     "express-messages": "^1.0.1",
     "express-session": "^1.14.0",
+    "moment": "^2.17.1",
     "mongoose": "^4.5.9",
     "morgan": "^1.7.0",
     "passport": "^0.3.2",
