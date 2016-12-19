@@ -202,39 +202,30 @@ module.exports = function(app, passport) {
 
   });
 
-  // testing, remove in production
-  app.get('/poems.json', function(req, res) {
-    Poem.find({}, function(err, poems) {
-      if (err) return res.render('error', {error: err});
+  // // testing, remove in production
+  // app.get('/users.json', function(req, res) {
 
-      res.send(poems);
-    })
-  })
+  //   User
+  //     .find({})
+  //     .populate({
+  //       path: 'poem',
+  //       select: 'author -_id',
+  //     })
+  //     .exec(function(err, users) {
+  //       if (err) return res.render('error', {error: err});
 
-  // testing, remove in production
-  app.get('/users.json', function(req, res) {
+  //       res.send(users);
+  //     });
+  // });
 
-    User
-      .find({})
-      .populate({
-        path: 'poem',
-        select: 'author -_id',
-      })
-      .exec(function(err, users) {
-        if (err) return res.render('error', {error: err});
+  // // testing, remove in production
+  // app.get('/poems.json', function(req, res) {
+  //   Poem.find({}, function(err, poems) {
+  //     if (err) return res.render('error', {error: err});
 
-        res.send(users);
-      });
-  });
-
-  // testing, remove in production
-  app.get('/poems.json', function(req, res) {
-    Poem.find({}, function(err, poems) {
-      if (err) return res.render('error', {error: err});
-
-      res.send(poems);
-    })
-  })
+  //     res.send(poems);
+  //   })
+  // })
 
   app.get('/@:username', function(req, res) {
     var username = req.params.username;
