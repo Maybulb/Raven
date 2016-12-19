@@ -236,27 +236,30 @@ module.exports = function(app, passport) {
       if (!user) {
         res.render('404')
       } else {
-        Poem.find({author: user._id}, function(err, poems) {
-          var follow_block = true
+        Poem
+          .find({author: user._id})
+          .sort({created_at: -1})
+          .exec(function(err, poems) {
+            var follow_block = true
             , button = {value: "Follow", url: "follow"};
 
-          if (req.user) {
-            // if the user is logged in
-            if (helpers.isFollowing(req.user, user)) {
-              button = {value: "Unfollow", url: "unfollow"}
+            if (req.user) {
+              // if the user is logged in
+              if (helpers.isFollowing(req.user, user)) {
+                button = {value: "Unfollow", url: "unfollow"}
+              }
+
+              // if logged in user is this user disable follow block
+              if (username === req.user.username) follow_block = false;
             }
 
-            // if logged in user is this user disable follow block
-            if (username === req.user.username) follow_block = false;
-          }
-
-          res.render('profile', {
-            user: user,
-            poems: poems,
-            button: button,
-            follow_block: follow_block
+            res.render('profile', {
+              user: user,
+              poems: poems,
+              button: button,
+              follow_block: follow_block
+            });
           });
-        });
       }
     });
   });
