@@ -15,6 +15,7 @@ module.exports = function(app, passport) {
           'author': { $in: req.user.relationships.following }
         })
         .sort({created_at: -1})
+        .populate('author')
         .exec(function(err, poems) {
           if (err) return res.render('error', {error: err});
 
@@ -38,9 +39,11 @@ module.exports = function(app, passport) {
       if (err) {
         res.redirect('/post')
       } else {
-        req.user.poems.push(poem.id);
-        console.log(req.user.poems);
-        res.redirect('/poem/' + poem._id)
+
+        req.user.poems.push(poem._id);
+        req.user.save(function(err, poem) {
+          res.redirect('/poem/' + poem._id)
+        });
       }
     });
   });
@@ -188,7 +191,9 @@ module.exports = function(app, passport) {
     Poem.findOne({_id: req.params.id}, function(err, poem) {
       if (err) return res.render('error', {error: err});
 
-      User.findOne({_id: poem.author}, function(err, author) {
+      console.log(poem);
+
+      User.findOne({_id: poem.author._id}, function(err, author) {
         if (err) return res.render('error', {error: err});
 
         res.render('poem', {
@@ -202,30 +207,31 @@ module.exports = function(app, passport) {
 
   });
 
-  // // testing, remove in production
-  // app.get('/users.json', function(req, res) {
+  // testing, remove in production
+  app.get('/users.json', function(req, res) {
 
-  //   User
-  //     .find({})
-  //     .populate({
-  //       path: 'poem',
-  //       select: 'author -_id',
-  //     })
-  //     .exec(function(err, users) {
-  //       if (err) return res.render('error', {error: err});
+    User
+      .find({})
+      .populate('poems')
+      .exec(function(err, users) {
+        if (err) return res.render('error', {error: err});
 
-  //       res.send(users);
-  //     });
-  // });
+        res.send(users);
+      });
+  });
 
-  // // testing, remove in production
-  // app.get('/poems.json', function(req, res) {
-  //   Poem.find({}, function(err, poems) {
-  //     if (err) return res.render('error', {error: err});
+  // testing, remove in production
+  app.get('/poems.json', function(req, res) {
 
-  //     res.send(poems);
-  //   })
-  // })
+    Poem
+      .find({})
+      .populate('author')
+      .exec(function(err, poems) {
+        if (err) return res.render('error', {error: err});
+
+        res.send(poems);
+      });
+  })
 
   app.get('/@:username', function(req, res) {
     var username = req.params.username;
@@ -239,6 +245,7 @@ module.exports = function(app, passport) {
         Poem
           .find({author: user._id})
           .sort({created_at: -1})
+          .populate('author')
           .exec(function(err, poems) {
             var follow_block = true
             , button = {value: "Follow", url: "follow"};
