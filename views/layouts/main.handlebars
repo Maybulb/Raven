@@ -3,9 +3,6 @@
 	<head>
 		<title>{{title}}{{^title}}Raven{{/title}}</title>
 		<meta charset="utf-8">
-		<link rel="stylesheet" href="/bower_components/skeleton/css/normalize.css">
-		<link rel="stylesheet" href="/bower_components/skeleton/css/skeleton.css">
-		<link rel="stylesheet" href="/bower_components/font-awesome/css/font-awesome.min.css">
 		<link rel="stylesheet" href="/css/style.css">
 		<link rel="stylesheet" href="//brick.a.ssl.fastly.net/Playfair+Display:400/Lora:400,700,400i,700i">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,18 +13,9 @@
 	<body>
 		<div class="container">
 			{{#if message}}
-				<div class="row">
-					<div class="twelve columns">
-						{{message}}
-					</div>
-				</div>
+				{{message}}
 			{{/if}}
-			<div class="row">
-				<div class="twelve columns">
-					<!-- temporary navigation until adam cleans this pigsty up -->
-					<header><a href="/">Raven</a> | <a href="/post">Post</a> • <a href="/me">Profile</a> • <a href="/settings">Settings</a></header>
-				</div>
-			</div>
+			<header><a href="/">Raven</a> | <a href="/post">Post</a> • <a href="/me">Profile</a> • <a href="/settings">Settings</a></header>
 			{{{ body }}}
 			<div class="row block inverse">
 				<footer>&copy; Raven Poetry 2016</footer>
