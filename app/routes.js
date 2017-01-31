@@ -362,6 +362,14 @@ module.exports = function(app, passport) {
     res.redirect("/@" + req.params.username);
   });
 
+  app.get('/poems.json', (req, res) => {
+    Poem.find({}, (err, poems) => {
+      if (err) throw err;
+
+      res.send(poems);
+    });
+  });
+
   app.get("/me", loggedIn, function(req, res) {
     res.redirect("/@" + req.user.username);
   });
