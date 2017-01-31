@@ -1,97 +1,48 @@
 body {
-  padding: 50px;
-  color: #111111;
-  font-family: "Lora", sans-serif; }
-
-header {
-  font-size: 3.4em;
-  text-decoration: none;
-  font-family: "Playfair Display", sans-serif;
-  margin-bottom: 30px; }
-
-h2 {
-  font-family: "Playfair Display", sans-serif;
-  font-size: 2em; }
-
-#username {
-  text-align: center;
-  margin-bottom: 0px; }
-
-#description {
-  margin-bottom: 20px;
-  font-size: 16px;
-  text-align: center; }
-
-.block {
-  padding: 15px;
-  border-radius: 5px; }
-  .block.inverse {
-    color: #eeeeee;
-    background: black; }
-
-p {
-  white-space: pre-wrap; }
-
-a {
-  color: #111111;
-  text-decoration: none; }
-  a:hover {
-    color: inherit;
-    border-bottom: 2px solid #111111; }
-
-input[type=text]#name {
-  font-size: 3em;
-  border: 0;
-  height: 110%; }
-
-textarea#poem {
-  font-size: 1em;
-  height: 300px; }
-
-input[type=submit] {
-  font-family: "Playfair Display", sans-serif !important; }
-
-input:focus, textarea:focus {
-  border-color: #111111 !important; }
-
-.full-height {
-  min-height: 100%; }
-
-.cardlink:hover {
-  border-bottom: none; }
-
-.card {
-  border: black solid 1px;
-  border-radius: 5px;
-  padding: 15px;
-  margin-bottom: 10px;
-  display: inline-block;
-  overflow: hidden; }
-  .card h5 {
+  padding: 2em; }
+  body .content {
     text-align: center;
-    margin-bottom: 0;
-    font-weight: bold; }
-  .card p {
-    width: 100%;
-    margin: 0;
-    line-height: 1.2em; }
-  .card hr {
-    border: 0;
-    height: 1px;
-    background: #333;
-    background-image: linear-gradient(to right, #ccc, #333, #ccc);
-    margin-top: 10px;
-    margin-bottom: 10px; }
-  .card .fade {
-    position: relative;
-    height: 6em;
-    overflow: hidden; }
-  .card .fade:after {
-    content: "";
-    text-align: right;
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 60%;
-    height: 1.2em;
-    background: linear-gradient(to right, rgba(255, 255, 255, 0), white 50%); }
+    padding: 10px;
+    margin: 2em 5em 2em 5em; }
+  body .card {
+    border: 1px solid black; }
+  body h1, body h2, body h3 {
+    font-family: "Libre Bodoni", serif; }
+  body p, body a, body footer {
+    font-family: "Crimson", serif; }
+  body a {
+    color: inherit;
+    text-decoration: none; }
+    body a:hover {
+      text-decoration: underline; }
+  body input[type=text], body input[type=password], body textarea {
+    padding: 1em;
+    border-radius: 5px;
+    border: 1px solid #AAAAAA;
+    font-size: 0.7em;
+    outline: none; }
+    body input[type=text]:focus, body input[type=password]:focus, body textarea:focus {
+      border: 1px solid black; }
+  body input[type=submit], body input[type=button], body button {
+    background: black;
+    border-radius: 5px;
+    color: white;
+    outline: none;
+    font-family: inherit;
+    border: 1px solid black;
+    font-size: 1.2em; }
+    body input[type=submit]:hover, body input[type=button]:hover, body button:hover {
+      background-color: white;
+      color: black; }
+  body nav ul {
+    list-style-type: none;
+    padding: 0; }
+    body nav ul .signup, body nav ul .options {
+      margin-left: 70%;
+      font-size: 1.3em; }
+    body nav ul img {
+      width: 5em;
+      height: 4em; }
+    body nav ul li {
+      display: inline;
+      margin: 5px; }

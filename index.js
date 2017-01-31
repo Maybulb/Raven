@@ -50,6 +50,15 @@ app.use(passport.session());
 app.use(cookieParser());
 app.use(flash());
 
+// template can get if authenticated
+app.use((req, res, next) => {
+  res.locals.authenticated = req.isAuthenticated();
+
+  if (req.isAuthenticated) res.locals.user = req.user;
+
+  next();
+});
+
 // connect to db
 mongoose.Promise = global.Promise;
 mongoose.connect(configDB.url);

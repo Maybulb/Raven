@@ -1,125 +1,68 @@
-$black: #111111;
-$white: #fff;
+// Libre Bodoni
+// Crimson
 
 body {
-	padding: 50px;
-	color: $black;
-	font-family: "Lora", sans-serif;
-}
+	padding: 2em;
 
-header {
-	font-size: 3.4em;
-	text-decoration: none;
-	font-family: "Playfair Display", sans-serif;
-	margin-bottom: 30px;
-}
-
-h2 {
-	font-family: "Playfair Display", sans-serif;
-	font-size: 2em;
-}
-
-#username {
-	text-align: center;
-	margin-bottom: 0px;
-}
-
-#description {
-	margin-bottom: 20px;
-	font-size: 16px;
-	text-align: center;
-}
-
-.block {
-	padding: 15px;
-	border-radius: 5px;
-	&.inverse {
-		color: invert($black);
-		background: invert($white);
-	}
-}
-
-p { white-space: pre-wrap; }
-
-a {
-	color: #111111;
-	text-decoration: none;
-	&:hover {
-		color: inherit;
-		border-bottom: 2px solid $black;
-	}
-}
-
-input[type=text]#name {
-	font-size: 3em;
-	border: 0;
-	height: 110%;
-}
-
-textarea#poem {
-	font-size: 1em;
-	height: 300px;
-}
-
-input[type=submit] {
-	font-family: "Playfair Display", sans-serif !important;
-}
-
-input, textarea {
-	&:focus {
-		border-color: $black !important;
-	}
-}
-
-.full-height {
-	min-height: 100%;
-}
-
-.cardlink {
-	&:hover {
-		border-bottom: none;
-	}
-}
-
-.card {
-	border: black solid 1px;
-	border-radius: 5px;
-	padding: 15px;
-	// box-shadow: 1px 1px 10px 0px rgba(0,0,0,0.75);
-	margin-bottom: 10px;
-	display: inline-block;
-	overflow: hidden;
-	h5 {
+	.content {
 		text-align: center;
-		margin-bottom: 0;
-		font-weight: bold;
+		padding: 10px;
+		margin: 2em 5em 2em 5em;
 	}
-	p {
-		width: 100%;
-		margin: 0;
-		line-height: 1.2em;
+
+	.card {
+		border: 1px solid black;
 	}
-	hr {
-		border: 0;
-	    height: 1px;
-	    background: #333;
-	    background-image: linear-gradient(to right, #ccc, #333, #ccc);
-	    margin-top: 10px;
-	    margin-bottom: 10px;
+
+	h1, h2, h3 {
+		font-family: "Libre Bodoni", serif;
 	}
-	.fade {
-	  	position: relative;
-	  	height: 6em;
-	  	overflow: hidden;
+
+	p, a, footer {
+		font-family: "Crimson", serif;
 	}
-	.fade:after {
-	  	content: "";
-	  	text-align: right;
-	  	position: absolute;
-	  	bottom: 0;
-	  	right: 0;
-	  	width: 60%;
-	  	height: 1.2em;
-	  	background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 50%);
+
+	a {
+		color: inherit;
+		text-decoration: none;
+		&:hover { text-decoration: underline; }
+	}
+
+	input[type=text], input[type=password], textarea {
+		padding: 1em;
+		border-radius: 5px;
+		border: 1px solid #AAAAAA;
+		font-size: 0.7em;
+		outline: none;
+		&:focus { border: 1px solid black; }
+	}
+
+	input[type=submit], input[type=button], button {
+		background: black;
+		border-radius: 5px;
+		color: white;
+		outline: none;
+		font-family: inherit;
+		border: 1px solid black;
+		font-size: 1.2em;
+		&:hover {
+			background-color: white;
+			color: black;
+		}
+	}
+
+	nav {
+		ul {
+			list-style-type: none;
+			padding: 0;
+
+			.signup, .options {
+				margin-left: 70%;
+				font-size: 1.3em;
+			}
+
+			img { width: 5em; height: 4em; }
+			li { display: inline; margin: 5px; }
+		}
 	}
 }

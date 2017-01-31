@@ -4,7 +4,7 @@
 		<title>{{title}}{{^title}}Raven{{/title}}</title>
 		<meta charset="utf-8">
 		<link rel="stylesheet" href="/css/style.css">
-		<link rel="stylesheet" href="//brick.a.ssl.fastly.net/Playfair+Display:400/Lora:400,700,400i,700i">
+		<link rel="stylesheet" href="//brick.a.ssl.fastly.net/Libre+Bodoni:400/Crimson:400">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta property="og:title" content="{{title}}" />
 		<meta property="og:description" content="{{description}}" />
@@ -12,14 +12,29 @@
 	</head>
 	<body>
 		<div class="container">
-			{{#if message}}
-				{{message}}
-			{{/if}}
-			<header><a href="/">Raven</a> | <a href="/post">Post</a> • <a href="/me">Profile</a> • <a href="/settings">Settings</a></header>
-			{{{ body }}}
-			<div class="row block inverse">
-				<footer>&copy; Raven Poetry 2016</footer>
+			<nav>
+				<ul>
+					<li><a href="/"><img src="/img/logo.png"></a></li>
+					{{#if authenticated}}
+						<span class="options">
+							<li><a href="/me">{{user.username}}</a></li>
+							<li><a href="/settings">Settings</a></li>
+							<li><a href="/logout">Logout</a></li>
+						</span>
+					{{else}}
+						<span class="signup">
+							<li><a href="/register">Register</a></li>
+							<li><a href="/login">Login</a></li>
+						</span>
+					{{/if}}
+				</ul>
+			</nav>
+			<hr>
+			<div class="content">
+				{{#if message}}<h3>{{message}}</h3>{{/if}}
+				{{{ body }}}
 			</div>
+			<footer>&copy; Raven Poetry 2016 • <a href="https://github.com/maybulb/raven">github/raven</a></footer>
 		</div>
 	</body>
 </html>

@@ -6,15 +6,16 @@ var Poem = require("./models/poem");
 var helpers = require("./helpers");
 
 module.exports = function(app, passport) {
+
   app.get("/", function(req, res) {
     if (req.isAuthenticated()) {
       Poem
-        .find({ "author": { $in: req.user.relationships.following } })
+        .find({ "author": { $in: [req.user._id].concat(req.user.relationships.following) } })
         .sort({ created_at: -1 })
         .populate("author")
         .exec(function(err, poems) {
-          if (err)
-            return res.render("error", { error: err });
+          if (err) return res.render("error", { error: err });
+          if (poems.length < 1) return res.render('intro');
 
           res.render("home", { poems: poems });
         });
@@ -33,14 +34,13 @@ module.exports = function(app, passport) {
     });
 
     poem.save(function(err, poem) {
-      if (err) {
-        res.redirect("/post");
-      } else {
-        req.user.poems.push(poem._id);
-        req.user.save(function(err, poem) {
-          res.redirect("/poem/" + poem._id);
-        });
-      }
+      if (err) return res.redirect("/post");
+
+      req.user.poems.push(poem._id);
+
+      req.user.save((err, poem) => {
+        res.redirect("/poem/" + poem._id);
+      });
     });
   });
 
@@ -171,9 +171,7 @@ module.exports = function(app, passport) {
     });
   });
 
-  app.post(
-    "/register",
-    passport.authenticate("local-register", {
+  app.post("/register", passport.authenticate("local-register", {
       successRedirect: "/",
       failureRedirect: "/register",
       failureFlash: true
@@ -194,15 +192,13 @@ module.exports = function(app, passport) {
   );
 
   app.get("/poem/:id", function(req, res) {
+    console.log(req.params.id);
+
     Poem.findOne({ _id: req.params.id }, function(err, poem) {
-      if (err)
-        return res.render("error", { error: err });
+      if (err) return res.render("error", { error: err });
 
-      console.log(poem);
-
-      User.findOne({ _id: poem.author._id }, function(err, author) {
-        if (err)
-          return res.render("error", { error: err });
+      User.findOne({ _id: poem.author }, function(err, author) {
+        if (err) return res.render("error", { error: err });
 
         res.render("poem", {
           poem: poem,
@@ -276,8 +272,7 @@ module.exports = function(app, passport) {
 
   app.get("/@:username/followers", function(req, res) {
     User.findOne({ username: req.params.username }, function(err, user) {
-      if (err)
-        return res.render("error", { error: err });
+      if (err) return res.render("error", { error: err });
 
       var followerIDs = user.relationships.followers, followers = [];
 
@@ -288,6 +283,14 @@ module.exports = function(app, passport) {
       }
 
       res.render("followers", { followers: followers });
+    });
+  });
+
+  app.get('/@:username/following', function(req, res) {
+    User.findOne({ username: req.params.username}, function(err, user) {
+      return res.render("error", { error: err });
+
+      res.send(user.relationships);
     });
   });
 
@@ -374,4 +377,5 @@ module.exports = function(app, passport) {
 
     res.redirect("/login"); // else redirect to login
   }
+
 };
