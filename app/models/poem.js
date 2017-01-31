@@ -13,8 +13,7 @@ var poemSchema = new Schema({
 
 poemSchema.pre("save", function(next) {
   // new poem gets current created at day
-  if (!this.created_at)
-    this.created_at = new Date();
+  if (!this.created_at) this.created_at = new Date();
 
   next();
 });

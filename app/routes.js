@@ -6,16 +6,19 @@ var Poem = require("./models/poem");
 var helpers = require("./helpers");
 
 module.exports = function(app, passport) {
-
   app.get("/", function(req, res) {
     if (req.isAuthenticated()) {
       Poem
-        .find({ "author": { $in: [req.user._id].concat(req.user.relationships.following) } })
+        .find({
+          author: {
+            $in: [req.user._id].concat(req.user.relationships.following)
+          }
+        })
         .sort({ created_at: -1 })
         .populate("author")
         .exec(function(err, poems) {
           if (err) return res.render("error", { error: err });
-          if (poems.length < 1) return res.render('intro');
+          if (poems.length < 1) return res.render("intro");
 
           res.render("home", { poems: poems });
         });
@@ -65,8 +68,7 @@ module.exports = function(app, passport) {
 
       user.save(function(err) {
         // get flashes to start working lol
-        if (err)
-          console.log(err); // errors if username already exists
+        if (err) console.log(err); // errors if username already exists
       });
 
       res.redirect(req.get("referer"));
@@ -75,8 +77,7 @@ module.exports = function(app, passport) {
 
   app.get("/delete/:id", loggedIn, function(req, res) {
     Poem.findOne({ _id: req.params.id }, function(err, poem) {
-      if (err)
-        console.log(err);
+      if (err) console.log(err);
 
       if (String(poem.author) === String(req.user._id)) {
         res.render("delete", { poem: poem });
@@ -91,8 +92,7 @@ module.exports = function(app, passport) {
       if (String(poem.author) === String(req.user._id)) {
         // we good to delete! it belongs to the user
         Poem.remove({ _id: poem._id }, function(err, poem) {
-          if (err)
-            console.log(err);
+          if (err) console.log(err);
 
           console.log("deleted post");
         });
@@ -115,8 +115,7 @@ module.exports = function(app, passport) {
     }
 
     User.remove({ _id: req.user._id }, function(err) {
-      if (err)
-        return res.render("error", { error: err });
+      if (err) return res.render("error", { error: err });
 
       Poem.find({ author: req.user._id }).remove().exec();
 
@@ -126,8 +125,7 @@ module.exports = function(app, passport) {
 
   app.get("/edit/:id", loggedIn, function(req, res) {
     Poem.findOne({ _id: req.params.id }, function(err, poem) {
-      if (!poem.id)
-        return res.render("error", { error: err });
+      if (!poem.id) return res.render("error", { error: err });
 
       if (String(poem.author) === String(req.user._id)) {
         res.render("edit", { poem: poem });
@@ -139,8 +137,7 @@ module.exports = function(app, passport) {
 
   app.post("/edit/:id", loggedIn, function(req, res) {
     Poem.findOne({ _id: req.params.id }, function(err, poem) {
-      if (err)
-        return console.log(err);
+      if (err) return console.log(err);
 
       if (String(poem.author) !== String(req.user._id)) {
         return res.render("error", { error: "that's not your account" });
@@ -151,8 +148,7 @@ module.exports = function(app, passport) {
       poem.preview = req.body.content.replace(/(?:\r\n|\r|\n)/g, " / ");
 
       poem.save(function(err, poem) {
-        if (err)
-          return res.render("error", { error: err });
+        if (err) return res.render("error", { error: err });
 
         res.redirect("/poem/" + poem._id);
       });
@@ -175,24 +171,19 @@ module.exports = function(app, passport) {
       successRedirect: "/",
       failureRedirect: "/register",
       failureFlash: true
-    })
-  );
+    }));
 
   app.get("/login", function(req, res) {
     res.render("login", { title: "Login", message: req.flash("loginMessage") });
   });
 
-  app.post(
-    "/login",
-    passport.authenticate("local-login", {
+  app.post("/login", passport.authenticate("local-login", {
       successRedirect: "/",
       failureRedirect: "/login",
       failureFlash: true
-    })
-  );
+    }));
 
   app.get("/poem/:id", function(req, res) {
-
     Poem.findOne({ _id: req.params.id }, function(err, poem) {
       if (err) return res.render("error", { error: err });
 
@@ -212,8 +203,7 @@ module.exports = function(app, passport) {
   // testing, remove in production
   app.get("/users.json", function(req, res) {
     User.find({}).populate("poems").exec(function(err, users) {
-      if (err)
-        return res.render("error", { error: err });
+      if (err) return res.render("error", { error: err });
 
       res.send(users);
     });
@@ -222,8 +212,7 @@ module.exports = function(app, passport) {
   // testing, remove in production
   app.get("/poems.json", function(req, res) {
     Poem.find({}).populate("author").exec(function(err, poems) {
-      if (err)
-        return res.render("error", { error: err });
+      if (err) return res.render("error", { error: err });
 
       res.send(poems);
     });
@@ -233,8 +222,7 @@ module.exports = function(app, passport) {
     var username = req.params.username;
 
     User.findOne({ username: username }, function(err, user) {
-      if (err)
-        return res.render("error", { error: err });
+      if (err) return res.render("error", { error: err });
 
       if (!user) {
         res.render("404");
@@ -254,8 +242,7 @@ module.exports = function(app, passport) {
               }
 
               // if logged in user is this user disable follow block
-              if (username === req.user.username)
-                follow_block = false;
+              if (username === req.user.username) follow_block = false;
             }
 
             res.render("profile", {
@@ -285,8 +272,8 @@ module.exports = function(app, passport) {
     });
   });
 
-  app.get('/@:username/following', function(req, res) {
-    User.findOne({ username: req.params.username}, function(err, user) {
+  app.get("/@:username/following", function(req, res) {
+    User.findOne({ username: req.params.username }, function(err, user) {
       return res.render("error", { error: err });
 
       res.send(user.relationships);
@@ -295,14 +282,11 @@ module.exports = function(app, passport) {
 
   app.post("/follow/@:username", loggedIn, function(req, res) {
     User.findOne({ _id: req.user._id }, function(err, user) {
-      if (err)
-        console.log(err);
+      if (err) console.log(err);
       User.findOne({ username: req.params.username }, function(err, friend) {
-        if (err)
-          return res.render("error", { error: err });
+        if (err) return res.render("error", { error: err });
 
-        if (user._id === friend._id)
-          return;
+        if (user._id === friend._id) return;
 
         if (helpers.isFollowing(user, friend)) {
           return console.log("already following user");
@@ -312,13 +296,11 @@ module.exports = function(app, passport) {
         friend.relationships.followers.push(user._id);
 
         user.save(function(err, user) {
-          if (err)
-            return res.render("error", { error: err });
+          if (err) return res.render("error", { error: err });
         });
 
         friend.save(function(err, friend) {
-          if (err)
-            return res.render("error", { error: err });
+          if (err) return res.render("error", { error: err });
         });
 
         console.log(user.username + " followed " + friend.username);
@@ -329,15 +311,12 @@ module.exports = function(app, passport) {
 
   app.post("/unfollow/@:username", loggedIn, function(req, res) {
     User.findOne({ _id: req.user._id }, function(err, user) {
-      if (err)
-        console.log(err);
+      if (err) console.log(err);
 
       User.findOne({ username: req.params.username }, function(err, friend) {
-        if (err)
-          return res.render("error", { error: err });
+        if (err) return res.render("error", { error: err });
 
-        if (user._id === friend._id)
-          return;
+        if (user._id === friend._id) return;
 
         if (!helpers.isFollowing(user, friend)) {
           return console.log("you are not following that user");
@@ -347,13 +326,11 @@ module.exports = function(app, passport) {
         friend.relationships.followers.pull(user._id);
 
         user.save(function(err, user) {
-          if (err)
-            return res.render("error", { error: err });
+          if (err) return res.render("error", { error: err });
         });
 
         friend.save(function(err, friend) {
-          if (err)
-            return res.render("error", { error: err });
+          if (err) return res.render("error", { error: err });
         });
 
         console.log(user.username + " unfollowed " + friend.username);
@@ -362,7 +339,7 @@ module.exports = function(app, passport) {
     res.redirect("/@" + req.params.username);
   });
 
-  app.get('/poems.json', (req, res) => {
+  app.get("/poems.json", (req, res) => {
     Poem.find({}, (err, poems) => {
       if (err) throw err;
 
@@ -379,10 +356,8 @@ module.exports = function(app, passport) {
   });
 
   function loggedIn(req, res, next) {
-    if (req.isAuthenticated())
-      return next();
+    if (req.isAuthenticated()) return next();
 
     res.redirect("/login"); // else redirect to login
   }
-
 };
