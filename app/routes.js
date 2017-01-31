@@ -38,7 +38,7 @@ module.exports = function(app, passport) {
 
       req.user.poems.push(poem._id);
 
-      req.user.save((err, poem) => {
+      req.user.save((err, user) => {
         res.redirect("/poem/" + poem._id);
       });
     });
@@ -192,7 +192,6 @@ module.exports = function(app, passport) {
   );
 
   app.get("/poem/:id", function(req, res) {
-    console.log(req.params.id);
 
     Poem.findOne({ _id: req.params.id }, function(err, poem) {
       if (err) return res.render("error", { error: err });
