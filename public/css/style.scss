@@ -20,6 +20,7 @@ body {
 
 	p, a, footer {
 		font-family: "Crimson", serif;
+		white-space: pre-wrap;
 	}
 
 	a {
@@ -48,6 +49,19 @@ body {
 		&:hover {
 			background-color: white;
 			color: black;
+		}
+	}
+
+	#post {
+		input[type=text] {
+			font-size: 0.9em;
+			margin: 10px;
+		}
+
+		textarea {
+			font-size: 1.2em;
+			width: 60%;
+			height: 20vh;
 		}
 	}
 

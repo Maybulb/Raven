@@ -9,7 +9,8 @@ body {
   body h1, body h2, body h3 {
     font-family: "Libre Bodoni", serif; }
   body p, body a, body footer {
-    font-family: "Crimson", serif; }
+    font-family: "Crimson", serif;
+    white-space: pre-wrap; }
   body a {
     color: inherit;
     text-decoration: none; }
@@ -34,6 +35,13 @@ body {
     body input[type=submit]:hover, body input[type=button]:hover, body button:hover {
       background-color: white;
       color: black; }
+  body #post input[type=text] {
+    font-size: 0.9em;
+    margin: 10px; }
+  body #post textarea {
+    font-size: 1.2em;
+    width: 60%;
+    height: 20vh; }
   body nav ul {
     list-style-type: none;
     padding: 0; }
