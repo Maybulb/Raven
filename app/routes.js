@@ -1,4 +1,6 @@
-var mongoose = require("mongoose"), moment = require("moment");
+var mongoose = require('mongoose')
+  , jwt = require('jsonwebtoken')
+  , moment = require('moment');
 
 var User = require("./models/user");
 var Poem = require("./models/poem");
@@ -338,6 +340,16 @@ module.exports = function(app, passport) {
     });
     res.redirect("/@" + req.params.username);
   });
+
+  app.route('/token')
+    .get(loggedIn, (req, res) => {
+      var token = jwt.sign({ id: req.user._id}, 'secretsecret');
+      res.send({token: token});
+    })
+
+    .post((req, res) => {
+
+    });
 
   app.get("/poems.json", (req, res) => {
     Poem.find({}, (err, poems) => {
