@@ -7,11 +7,18 @@ Raven is a network to share poetry, and all the creative ideas that come with it
 
 ## Development
 
+You'll need to get an instance of Mongo running first.
+
 ```bash
 git clone https://github.com/maybulb/raven
 
-cd raven && npm i
-node index.js
+cd raven && npm run mongo
+```
+
+Keep this session open, and open a new one in the same directory.
+
+```bash
+npm run start
 ```
 
 ## API Routes/Map

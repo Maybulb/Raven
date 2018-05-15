@@ -6,6 +6,10 @@
   "repository": "https://github.com/maybulb/raven",
   "author": "Maybulb",
   "license": "MPL-2.0",
+  "scripts": {
+    "mongo": "brew install mongodb && mongod",
+    "start": "npm i && node index.js"
+  },
   "dependencies": {
     "bcrypt": "^1.0.2",
     "body-parser": "^1.15.2",
